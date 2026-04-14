@@ -18,16 +18,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 // ── Supabase Admin Client (service role for user management) ──
-const supabaseAdmin = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+const supabaseUrl = process.env.SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder';
+const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
 // ── Helper: Create per-request Supabase client with user's JWT ──
 function getSupabaseClient(accessToken) {
   return createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY,
+    supabaseUrl,
+    process.env.SUPABASE_ANON_KEY || 'placeholder',
     {
       global: {
         headers: { Authorization: `Bearer ${accessToken}` }
