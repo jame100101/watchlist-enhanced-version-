@@ -405,8 +405,11 @@ app.get('*', (req, res) => {
 });
 
 // ── Start Server ────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n🎬 Watchlist Server running at http://localhost:${PORT}`);
-  console.log(`   Supabase: ${process.env.SUPABASE_URL ? '✓ Connected' : '✗ Not configured'}`);
-  console.log(`   TMDB API: ${TMDB_KEY ? '✓ Key loaded' : '✗ Missing key'}\n`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`\n🎬 Watchlist Server running at http://localhost:${PORT}`);
+        console.log(`   Supabase: ${process.env.SUPABASE_URL ? '✓ Connected' : '✗ Not configured'}`);
+        console.log(`   TMDB API: ${TMDB_KEY ? '✓ Key loaded' : '✗ Missing key'}\n`);
+    });
+}
+module.exports = app;
