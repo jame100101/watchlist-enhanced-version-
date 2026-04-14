@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#71d7cd",
+                    "secondary": "#e9c176",
+                    "primary-container": "#00322e",
+                    "surface-dim": "#121414",
+                    "outline": "#8c9291",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#ac8c7e",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary": "#422b21",
+                    "error-container": "#93000a",
+                    "background": "#121414",
+                    "on-secondary": "#412d00",
+                    "secondary-fixed": "#ffdea5",
+                    "secondary-fixed-dim": "#e9c176",
+                    "surface-container-lowest": "#0d0f0f",
+                    "error": "#ffb4ab",
+                    "surface-container-high": "#282a2a",
+                    "surface-container-low": "#1a1c1c",
+                    "primary-fixed": "#8ef4e9",
+                    "tertiary-container": "#3c261c",
+                    "primary": "#71d7cd",
+                    "on-primary": "#003733",
+                    "on-secondary-container": "#dab36a",
+                    "outline-variant": "#424848",
+                    "inverse-primary": "#006a63",
+                    "surface-bright": "#383939",
+                    "primary-fixed-dim": "#71d7cd",
+                    "inverse-on-surface": "#2f3131",
+                    "tertiary-fixed-dim": "#e3bfb0",
+                    "tertiary-fixed": "#ffdbcc",
+                    "surface": "#121414",
+                    "tertiary": "#e3bfb0",
+                    "on-background": "#e2e2e2",
+                    "on-secondary-fixed": "#261900",
+                    "on-tertiary-fixed": "#2a170d",
+                    "on-primary-fixed": "#00201d",
+                    "on-secondary-fixed-variant": "#5d4201",
+                    "on-surface-variant": "#c2c8c7",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#604403",
+                    "on-surface": "#e2e2e2",
+                    "surface-container-highest": "#333535",
+                    "surface-container": "#1e2020",
+                    "inverse-surface": "#e2e2e2",
+                    "surface-variant": "#333535",
+                    "on-primary-container": "#35a299",
+                    "on-tertiary-fixed-variant": "#5a4136"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Manrope", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #121414;
+            color: #e2e2e2;
+        }
+        .cinematic-shadow {
+            box-shadow: 0 20px 40px rgba(113, 215, 205, 0.08);
+        }
+        .glass-gradient {
+            background: linear-gradient(135deg, #71d7cd 0%, #00322e 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30 min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#121414]/70 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full shadow-[0_20px_40px_rgba(113,215,205,0.08)]">
+<div class="text-2xl font-['Newsreader'] italic font-bold text-slate-100">Watchlist</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-teal-400 border-b border-teal-400/50 pb-1 font-['Inter'] text-sm tracking-wide transition-all duration-300 ease-out hover:text-teal-300" href="#">Explore</a>
+<a class="text-slate-400 font-medium font-['Inter'] text-sm tracking-wide hover:text-slate-100 transition-all duration-300 ease-out hover:text-teal-300" href="#">Movies</a>
+<a class="text-slate-400 font-medium font-['Inter'] text-sm tracking-wide hover:text-slate-100 transition-all duration-300 ease-out hover:text-teal-300" href="#">TV Shows</a>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-teal-400 cursor-pointer hover:scale-110 transition-transform">search</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-slate-100 transition-colors">account_circle</span>
+</div>
+</nav>
+<!-- SideNavBar (Hidden on Search Page as per "Focus" intent, but defined for structure) -->
+<aside class="hidden lg:flex flex-col gap-2 h-screen w-64 fixed left-0 top-0 pt-24 bg-[#121414] bg-gradient-to-r from-[#1a1c1c] to-transparent z-40">
+<div class="px-6 mb-8">
+<h2 class="font-['Newsreader'] text-xl italic text-slate-100">Library</h2>
+<p class="font-['Manrope'] text-xs text-slate-500 uppercase tracking-widest mt-1">Curated Collections</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 font-['Manrope'] tracking-wide text-sm font-medium" href="#">
+<span class="material-symbols-outlined">home</span>Home
+            </a>
+<a class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 font-['Manrope'] tracking-wide text-sm font-medium" href="#">
+<span class="material-symbols-outlined">check_circle</span>Watched
+            </a>
+<a class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 font-['Manrope'] tracking-wide text-sm font-medium" href="#">
+<span class="material-symbols-outlined">play_circle</span>Watching
+            </a>
+<a class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 font-['Manrope'] tracking-wide text-sm font-medium" href="#">
+<span class="material-symbols-outlined">bookmark</span>To Watch
+            </a>
+<a class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 font-['Manrope'] tracking-wide text-sm font-medium" href="#">
+<span class="material-symbols-outlined">favorite</span>Favorites
+            </a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-grow pt-28 pb-20 px-8 lg:ml-64">
+<!-- Search Section -->
+<section class="max-w-6xl mx-auto mb-16">
+<div class="relative group">
+<div class="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="w-full bg-surface-container-lowest border-none py-6 pl-16 pr-8 rounded-xl text-xl font-body placeholder:text-outline/50 focus:ring-1 focus:ring-primary/20 transition-all duration-500 outline-none" placeholder="Search for movies, directors, or genres..." type="text"/>
+<div class="absolute inset-0 rounded-xl pointer-events-none border border-outline-variant/20 group-focus-within:border-primary/40 transition-all"></div>
+</div>
+<div class="flex gap-4 mt-6">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant text-xs font-label uppercase tracking-widest cursor-pointer hover:bg-surface-container-high transition-colors">Trending</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant text-xs font-label uppercase tracking-widest cursor-pointer hover:bg-surface-container-high transition-colors">Neo-Noir</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant text-xs font-label uppercase tracking-widest cursor-pointer hover:bg-surface-container-high transition-colors">Criterion</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant text-xs font-label uppercase tracking-widest cursor-pointer hover:bg-surface-container-high transition-colors">2024 Releases</span>
+</div>
+</section>
+<!-- Search Results & Detail View Split Layout -->
+<div class="max-w-[1400px] mx-auto grid grid-cols-1 xl:grid-cols-12 gap-12">
+<!-- Sophisticated List -->
+<div class="xl:col-span-4 space-y-6">
+<h3 class="font-headline text-2xl italic mb-8 px-2">Top Results</h3>
+<!-- Result Item 1 (Active) -->
+<div class="group relative flex gap-6 p-4 rounded-xl bg-surface-container-low border-r-4 border-primary cinematic-shadow cursor-pointer transition-all">
+<div class="w-20 h-28 flex-shrink-0 rounded-lg overflow-hidden bg-surface-container-highest">
+<img alt="Movie Poster" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="atmospheric cinematic movie poster with dark moody lighting and neon teal highlights in a rainy urban setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt7KprjXyTcuWM8UvquvQEIuMzc9fommFXq0fzAX3HEFCy9hx0JcNueeKZtY8BD_WPlJmu0RcJpizVvG6PFMdcexZdz1OoR9t1tasQ3O8TS-n_09zdLIU7C3ppGUQTV9iwRSGYi9NwIO8sGRs1h6p_gSqNrrIXpILGWm8fs0BcrmWgoTVHlU6hEiiPQSetDqDSkiasnk-hqaq3B2zMs9uckKIAs0KwWU8TrVX_V-3Ey1EsWAaQV2UHXvyNEOxcuSShr_Dyncg8EPxa"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-xs font-label text-secondary uppercase tracking-[0.2em] mb-1">Sci-Fi / Drama</span>
+<h4 class="font-headline text-lg leading-tight text-on-surface">Echoes of Silence</h4>
+<p class="text-sm text-on-surface-variant mt-1">2024 • Directed by Elena Rossi</p>
+</div>
+</div>
+<!-- Result Item 2 -->
+<div class="group relative flex gap-6 p-4 rounded-xl hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-20 h-28 flex-shrink-0 rounded-lg overflow-hidden bg-surface-container-highest">
+<img alt="Movie Poster" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500" data-alt="dramatic black and white close up of a vintage film reel with sharp contrasts and elegant shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp33V7EaYQlPgNWRAgZ7yPHwTJu7Tpqv7dNeLAm1B-eUecU-7wqvVZIm31vqVX97H7Vh6UJYwarssbs8az4nfXlHv4zEVg9zEVrWX68Bd9hQkt_M8Ji8bTjo7zIRu23GoBnFpGYWPpEaPfGtg8e9ghwro35ChyQ9ZwMVfxgvru5nEF4dnLtE0_4b59zYUUuLfUW4C0bSL_XBdmsvyfysNKz0z2b1fxCCN5O7CMjYBd6wxZp-3r21fb3DzzRs4TMPjd5OnnE_17nsWj"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-[0.2em] mb-1">Biopic</span>
+<h4 class="font-headline text-lg leading-tight text-on-surface/70 group-hover:text-on-surface transition-colors">The Last Reel</h4>
+<p class="text-sm text-on-surface-variant/60 mt-1">2023 • Directed by Julian Vane</p>
+</div>
+</div>
+<!-- Result Item 3 -->
+<div class="group relative flex gap-6 p-4 rounded-xl hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-20 h-28 flex-shrink-0 rounded-lg overflow-hidden bg-surface-container-highest">
+<img alt="Movie Poster" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500" data-alt="abstract architectural shot of a futuristic theater with warm golden lighting and deep shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFfhSYNlPkaVIv5x1or4SXJCNoK4Q_OHF5jw4BI9HGa-UCB3LHUqdQUHc8mfn1GDnt5ekNiTd8gW2l-R672LGBs9AD36iLFBnemgrj-rKvBWcjjcXMo5WFI-12wzAo8BJDR8i40FyK-vN77W0RrU5XeMXSi6OtgKOBKIoOQue55ANdXYGRLmRVv1vXIjfkpXWpmen8wAiGBvpcO3DHiODp2ESjRwWcwVZuNPwJYbAxL7QLNo_IfVY7O9KWsr7aUjIO5WBxSYYNY_r-"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-[0.2em] mb-1">Architecture</span>
+<h4 class="font-headline text-lg leading-tight text-on-surface/70 group-hover:text-on-surface transition-colors">Monolith</h4>
+<p class="text-sm text-on-surface-variant/60 mt-1">2024 • Directed by Sarah Chen</p>
+</div>
+</div>
+</div>
+<!-- Detail View -->
+<div class="xl:col-span-8 bg-surface-container-lowest rounded-xl overflow-hidden relative">
+<!-- Backdrop Hero -->
+<div class="h-96 w-full relative">
+<img alt="Backdrop Image" class="w-full h-full object-cover" data-alt="wide panoramic shot of a misty cyberpunk cityscape at night with glowing teal and amber lights reflecting in puddles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEVOGCoxgon3yFl1oIdlOkJmgIZ-u2evgXB4W3vI1vPH9u5pqDZQuN0-SuwWize4kYnk8NB1zZ5bQk61oFFJnYtX-fzP-GIcaDTCLIOQz68h_24L7zPHI0NSxEbvjKquKxFtH8Jr7zREjyodnTIVCy0RLeJg0VtNXwfPr2qRvuYY83H9CB-jVRI7doi2zqi9dtPycAauEbkcwCPO2PkkxJQC-k11zGudC8DYUaaMCBoz5H9lRwI4bl49gyclqAIMNxy5OoKybBh7Ny"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent"></div>
+<div class="absolute bottom-8 left-12 right-12 flex justify-between items-end">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-secondary/20 text-secondary border border-secondary/30 px-3 py-1 rounded text-[10px] font-label uppercase tracking-widest">Masterpiece</span>
+<span class="text-on-surface-variant text-sm font-label">2h 14m • R</span>
+</div>
+<h1 class="font-headline text-6xl font-bold tracking-tight text-white italic">Echoes of Silence</h1>
+</div>
+<button class="glass-gradient px-8 py-3 rounded-lg font-body font-bold text-on-primary shadow-lg hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                            Add to Watchlist
+                        </button>
+</div>
+</div>
+<div class="p-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
+<!-- Info Column -->
+<div class="lg:col-span-2 space-y-10">
+<section>
+<h5 class="text-xs font-label text-primary uppercase tracking-[0.3em] mb-4">Synopsis</h5>
+<p class="font-body text-lg leading-relaxed text-on-surface-variant font-light">
+                                In a near-future metropolis where sound is a regulated commodity, a rogue frequency technician discovers a haunting melody that has the power to restore suppressed memories. As the authorities close in, she must choose between her own safety and the awakening of a city that has forgotten how to feel.
+                            </p>
+</section>
+<section>
+<h5 class="text-xs font-label text-primary uppercase tracking-[0.3em] mb-6">Cast</h5>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="text-center">
+<div class="w-16 h-16 mx-auto rounded-full bg-surface-container-highest overflow-hidden mb-3">
+<img alt="Cast member" class="w-full h-full object-cover" data-alt="portrait of a man with intense gaze and moody studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtCvKLvTI3JKFAoN3V_KS_3_8zGWQ7ZoYW7ntBScNjJq9DzvcVLj23PGPFA1OPIimBB2wYU05oitSLkgw0c39eJBP-rO_spPaEW_5c66JAyv4WWP95Mzw80PAxHF9NRwLf_GqqcmAbsAsYqcFxmqkH93UyyUnYwBL4OnidMIBs2tSv5v4W7W0ua8TwgigODP3N4Mab4z2EDzIXQsHTPVTDJXVH2ds5Maj6xN99r5PQKqPEK8P3i0VRbx9NnThtX3XLwhevRF20vU_z"/>
+</div>
+<p class="text-xs font-bold text-on-surface">Markus Thorne</p>
+<p class="text-[10px] text-on-surface-variant uppercase mt-1">Aris</p>
+</div>
+<div class="text-center">
+<div class="w-16 h-16 mx-auto rounded-full bg-surface-container-highest overflow-hidden mb-3">
+<img alt="Cast member" class="w-full h-full object-cover" data-alt="close-up portrait of a woman with elegant features and soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPz3aQebautqh4--4fCfVU82wdNEIuQrY2aQCjQG9enhZk15Zu3YP3HF3CqGaaNDddmd_JI42gmeYAqT7jMB8YmiVLD6jcn8tyx-fSxcp_pSwnHk9pm3k8cDutkjBOV4CkDW_2FI7FThvEYqEIzah1TJqsTo6IPTr7BGU7hsRQt_UhtQ1xTdgRDUn54b-DAYws6H4mlXC8iQkkODfXszoVIYhfgvN7qhiraJJnQC8F5uTh2Yzkx_fxXz8AgmamjBAbbeV7QbBx_X-A"/>
+</div>
+<p class="text-xs font-bold text-on-surface">Lena Headey</p>
+<p class="text-[10px] text-on-surface-variant uppercase mt-1">Commander</p>
+</div>
+<div class="text-center">
+<div class="w-16 h-16 mx-auto rounded-full bg-surface-container-highest overflow-hidden mb-3">
+<img alt="Cast member" class="w-full h-full object-cover" data-alt="portrait of a young actor with thoughtful expression and cool toned lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq9eRTeyKKZYzbzZE4dB5luadbxwh-lCLo-Pre9Q7wW9WSrl65IaHxIFhFwiThvO8VlYI3ETZOWma4uDKaxAWRiN7cwUXANDy_aWvN_W8J51_nNCadlp5-Dor8lK6iMachmQ7o861Wu47Km_r-WpJmUhDKo8K8M5awT-FbrxBwfgSbuUg_P-5cGk0oqbvGluz1Mqm-rB3ekYGpJTvVRLfI0cCNH5VE5NZtF2fociuoBu43jkpb07T17vqsm3RFV-nKAjHlznOULh7H"/>
+</div>
+<p class="text-xs font-bold text-on-surface">David Oyelowo</p>
+<p class="text-[10px] text-on-surface-variant uppercase mt-1">The Fixer</p>
+</div>
+<div class="text-center">
+<div class="w-16 h-16 mx-auto rounded-full bg-surface-container-highest overflow-hidden mb-3">
+<img alt="Cast member" class="w-full h-full object-cover" data-alt="high fashion cinematic portrait of a woman with dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf22ZXN7-nQalU-Q8utEM3T9VEpirRb_fvir1v8hj9LbNbiDzpbJTKCou1rbpynj09WLU6fDxj2X583zGP_xZcRpdxpo4qXwJhUYaYjo2BAR-gSVu6LoAIi8WYTSUAtfHBPnWpjrAx--1lVikaOHpFSB7V_XhFbRZfsVMLmtAwDfCGn3sk1KY5IWjHI67GGtU1QIm2T678uIOWQGHjv_TyowJBBWhUMsmrZ7yL9Jz3EGZ_q7qXkKvuPMagsTVrl7yU2i-jChigNh39"/>
+</div>
+<p class="text-xs font-bold text-on-surface">Anya Taylor</p>
+<p class="text-[10px] text-on-surface-variant uppercase mt-1">The Muse</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Media Column -->
+<div class="space-y-8">
+<div>
+<h5 class="text-xs font-label text-primary uppercase tracking-[0.3em] mb-6">Trailer</h5>
+<div class="aspect-video rounded-lg overflow-hidden bg-surface-container-high relative group cursor-pointer">
+<img alt="Trailer Thumbnail" class="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" data-alt="blurred motion shot of a cinema projector lens glowing in a dark room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKCS69pvoLtrYFT-7-i6y1luhO6gI49F5fKwbm4sjXtBNYbmG5bJ9txJUgI8IclKyvvpE7tIPdyvzk-tcYbEc-8eF-GcLHVaRxfyegFXXe0Bj9EgqtNxeVqn-i_LqNCVFJ-ETIhTwImVLaMZuoItyKDaDIG-Zwl1VToI4_Dfrzqm4mnNVt_XOaIHQUbDC6uDHMn1IZKkc5Hkq2jS_maRZI0MKiyiZr4iZDkiQIZj6vGNWhmpwNFt804aw88-GOfGhTVUClV9FbRm34"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary/20 backdrop-blur-md flex items-center justify-center border border-primary/40 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h5 class="text-xs font-label text-primary uppercase tracking-[0.3em] mb-4">Metadata</h5>
+<ul class="space-y-3">
+<li class="flex justify-between border-b border-outline-variant/10 pb-2">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Released</span>
+<span class="text-xs font-body text-on-surface">Oct 24, 2024</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/10 pb-2">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Studio</span>
+<span class="text-xs font-body text-on-surface">Auteur Digital</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/10 pb-2">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Rating</span>
+<span class="text-xs font-body text-secondary">9.4 IMDB</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 mt-auto bg-[#0d0f0f] border-t border-slate-800/20 flex flex-col md:flex-row justify-between items-center px-12 gap-6">
+<div class="font-['Newsreader'] text-lg italic text-slate-300">Watchlist</div>
+<div class="text-slate-600 font-['Inter'] text-xs uppercase tracking-[0.2em] flex gap-8">
+<a class="hover:text-teal-400 transition-colors" href="#">Terms</a>
+<a class="hover:text-teal-400 transition-colors" href="#">Privacy</a>
+<a class="hover:text-teal-400 transition-colors" href="#">API</a>
+<a class="hover:text-teal-400 transition-colors" href="#">Press</a>
+</div>
+<div class="text-slate-600 font-['Inter'] text-xs uppercase tracking-[0.2em]">
+            © 2024 Watchlist Digital Auteur. All Rights Reserved.
+        </div>
+</footer>
+</body></html>

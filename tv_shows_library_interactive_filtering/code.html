@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,700;1,6..72,800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#ffdad6",
+                    "inverse-on-surface": "#2f3131",
+                    "background": "#121414",
+                    "surface-dim": "#121414",
+                    "on-tertiary-fixed-variant": "#5a4136",
+                    "surface-container-highest": "#333535",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-primary": "#003733",
+                    "secondary": "#e9c176",
+                    "primary-container": "#00322e",
+                    "on-secondary-fixed": "#261900",
+                    "surface-container-high": "#282a2a",
+                    "surface-container": "#1e2020",
+                    "on-surface": "#e2e2e2",
+                    "on-tertiary-fixed": "#2a170d",
+                    "on-tertiary": "#422b21",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-primary-fixed": "#00201d",
+                    "tertiary-fixed-dim": "#e3bfb0",
+                    "secondary-fixed-dim": "#e9c176",
+                    "on-error": "#690005",
+                    "surface-variant": "#333535",
+                    "on-secondary": "#412d00",
+                    "on-primary-container": "#35a299",
+                    "surface": "#121414",
+                    "on-surface-variant": "#c2c8c7",
+                    "on-secondary-fixed-variant": "#5d4201",
+                    "on-background": "#e2e2e2",
+                    "inverse-primary": "#006a63",
+                    "secondary-fixed": "#ffdea5",
+                    "tertiary-container": "#3c261c",
+                    "outline": "#8c9291",
+                    "tertiary": "#e3bfb0",
+                    "inverse-surface": "#e2e2e2",
+                    "surface-tint": "#71d7cd",
+                    "primary-fixed-dim": "#71d7cd",
+                    "error": "#ffb4ab",
+                    "surface-bright": "#383939",
+                    "primary-fixed": "#8ef4e9",
+                    "surface-container-low": "#1a1c1c",
+                    "on-secondary-container": "#dab36a",
+                    "primary": "#71d7cd",
+                    "error-container": "#93000a",
+                    "outline-variant": "#424848",
+                    "surface-container-lowest": "#0d0f0f",
+                    "secondary-container": "#604403",
+                    "on-tertiary-container": "#ac8c7e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Manrope", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        body {
+            background-color: #121414;
+            color: #e2e2e2;
+            font-family: 'Manrope', sans-serif;
+        }
+        .cinematic-gradient {
+            background: linear-gradient(to right, #71d7cd, #00322e);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(113, 215, 205, 0.3);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .sidebar-active {
+            color: #71d7cd;
+            background-color: rgba(113, 215, 205, 0.05);
+            border-right: 2px solid #71d7cd;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="bg-surface selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#121414]/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(113,215,205,0.08)] flex justify-between items-center px-8 h-20">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-['Newsreader'] italic font-bold text-slate-100">Watchlist</span>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-slate-400 font-medium hover:text-slate-100 transition-all duration-300 ease-out hover:text-teal-300" href="#">Explore</a>
+<a class="text-slate-400 font-medium hover:text-slate-100 transition-all duration-300 ease-out hover:text-teal-300" href="#">Movies</a>
+<div class="flex items-center gap-2">
+<a class="text-teal-400 border-b border-teal-400/50 pb-1 transition-all duration-300 ease-out hover:text-teal-300" href="#">TV Shows</a>
+<span class="text-slate-600 text-[10px] mt-1">/</span>
+<span class="text-slate-400 text-sm font-['Newsreader'] italic" id="breadcrumb-filter">Watching</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-slate-400 hover:text-teal-300 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-slate-400 hover:text-teal-300 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar (Filter Actions) -->
+<aside class="h-screen w-64 fixed left-0 top-0 pt-24 bg-[#121414] bg-gradient-to-r from-[#1a1c1c] to-transparent z-40 hidden lg:block">
+<div class="px-6 mb-8">
+<h2 class="font-['Newsreader'] text-xl italic text-teal-400">Library</h2>
+<p class="text-xs font-['Inter'] uppercase tracking-widest text-slate-500 mt-1">Curated Collections</p>
+</div>
+<div class="flex flex-col gap-2">
+<button class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 w-full text-left" onclick="updateFilter('Home', this)">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] tracking-wide text-sm font-medium">Home</span>
+</button>
+<button class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 w-full text-left" onclick="updateFilter('Watched', this)">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+<span class="font-['Manrope'] tracking-wide text-sm font-medium">Watched</span>
+</button>
+<button class="sidebar-active flex items-center gap-4 py-3 px-6 transition-all duration-300 w-full text-left" onclick="updateFilter('Watching', this)">
+<span class="material-symbols-outlined" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span class="font-['Manrope'] tracking-wide text-sm font-medium">Watching</span>
+</button>
+<button class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 w-full text-left" onclick="updateFilter('To Watch', this)">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-['Manrope'] tracking-wide text-sm font-medium">To Watch</span>
+</button>
+<button class="flex items-center gap-4 text-slate-500 py-3 px-6 hover:bg-slate-800/30 hover:text-slate-200 hover:pl-7 transition-all duration-300 w-full text-left" onclick="updateFilter('Favorites', this)">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-['Manrope'] tracking-wide text-sm font-medium">Favorites</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-20">
+<div id="filter-content-wrapper">
+<!-- Hero Banner: Trending Show -->
+<section class="relative w-full h-[870px] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 hover:scale-105" data-alt="cinematic wide shot of a futuristic neon city at night with wet pavement and atmospheric fog, moody teal and orange lighting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD86mZAeIM4zFEVkZq3J8KHCjDHQZOHJRkb79cTN65K6iQdUysQLvgAUhb3GLEiYqhowQg7zIS4tAZDs22qYt2CEKPwv1iNmACKKDc8kz3khCIgGVn9dyWkK1KMkZGtePMnKdrdLCZJe9DwqCaqRMv2ZSbfh8g5drcZFivg4uxiY4Z-CrOVxO4q_I8-d1dWEEiOpz8uRjj5Yb-SwprKWfZvKCp9m0jwjmyLJy2vrZKTBsAAEJXpZhqsh4gD1yLs-xjYM-AJ62YPcDTi');">
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/40 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+</div>
+<div class="relative h-full flex flex-col justify-center px-12 md:px-20 max-w-5xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full w-fit mb-6">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] font-['Inter'] uppercase tracking-[0.2em] text-primary font-semibold" id="content-status-tag">Currently Watching</span>
+</div>
+<h1 class="font-['Newsreader'] text-6xl md:text-8xl italic font-bold text-on-surface leading-tight mb-4 text-glow">The Last <br/>Auteur</h1>
+<div class="flex items-center gap-6 mb-8 text-on-surface-variant font-medium">
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary">calendar_today</span> 2024</span>
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary">speed</span> 2 Seasons</span>
+<span class="px-2 py-0.5 border border-outline-variant rounded text-[10px] uppercase tracking-widest">Ultra HD</span>
+</div>
+<p class="text-lg text-on-surface-variant max-w-xl mb-10 leading-relaxed font-['Manrope']">
+                        In a world where cinema has been outlawed, a rogue director searches for the last remaining 35mm film stock to create one final masterpiece.
+                    </p>
+<div class="flex items-center gap-4">
+<button class="px-8 py-4 cinematic-gradient rounded-lg font-bold text-on-primary flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                            Continue Watching
+                        </button>
+<button class="px-8 py-4 border border-outline-variant bg-surface/30 backdrop-blur-md rounded-lg font-bold text-on-surface flex items-center gap-3 transition-colors hover:bg-surface-container-high active:scale-95">
+<span class="material-symbols-outlined">info</span>
+                            View Details
+                        </button>
+</div>
+</div>
+</section>
+<!-- Grid Content -->
+<section class="px-12 py-24">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-['Newsreader'] text-4xl italic text-on-surface mb-2" id="section-title">Continue Watching</h2>
+<div class="h-1 w-20 bg-primary/40 rounded-full"></div>
+</div>
+<a class="text-xs font-['Inter'] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2" href="#">
+                        View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Large Feature Card -->
+<div class="md:col-span-2 group relative h-[500px] rounded-xl overflow-hidden bg-surface-container-low transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="dramatic profile of a man in shadows with soft backlight highlighting his silhouette, noir aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMcjGIWS1w9f-44Ln9EPUGwAS5YxozMl64xFm5JR69LqZ2yoPeThJ3sn8VopQqME2laDJDGSLlhbXnZnMDPvU1wjeaASztMQQRt1c23Ej3LOhHbt_-tFCEODJktqvTRWJ7mpPMne5v8crzNV_t3MPNL2OYvKAZA18JR-FluOIiqz7k3boGxKfykiLACYu3rfsPEOE1fB5Q7fvfT3VUpQunI6_6qjCCMKh3q3nWEJXg4BXVB_qm2jKV0DjkbcPdsJMavmBkzffELlvQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<span class="text-[10px] font-['Inter'] uppercase tracking-[0.2em] text-primary mb-2 block">S1:E4 • The Silent Protocol</span>
+<h3 class="font-['Newsreader'] text-3xl italic text-on-surface mb-4">Shadow Protocol</h3>
+<div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+</div>
+</div>
+<!-- Small Cards -->
+<div class="md:col-span-1 group rounded-xl overflow-hidden bg-surface-container-low relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="old fashioned movie theater interior with red velvet seats and warm glowing lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt7I2RUR7mwBHY3DlpjOsWerwqZffKoVUXu0X91nQecCVjVJ9QYAwdGYCN2LXIXk_oudmoqXp4XETt2c9k8_itAcAFL98tjuuUyVTLtM4Mvrh4F5enODowICqxRHs3my_P-OJidmNQevGDbMwwBzmC0CJEmCvcam2bU3FEPY8YSURn3K9ScIOHvzHwTrQKFsHc2dRXmZuYAoIzOND-FObsiSYkJ1YnLfDUbaynYhEu3jb-f3gb_-P4mFNByI_aMEwey2N4JF2jEhZS"/>
+<div class="absolute inset-0 bg-surface/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-6 text-center backdrop-blur-sm">
+<div>
+<h4 class="font-['Newsreader'] text-xl italic mb-2">Vintage Hearts</h4>
+<p class="text-xs text-on-surface-variant">S2:E1 • Premiere</p>
+</div>
+</div>
+</div>
+<div class="md:col-span-1 group rounded-xl overflow-hidden bg-surface-container-low relative">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="abstract architectural shot of a modern glass building with deep shadows and sharp angles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBztoj65ZsV34azruqxWPke_nS0jsutIvmMwCV7RiX26q8CSnlLTYxCiwKqV64fBEsObfHWGFMWqL_utSiXolxPuOF_PvcGY8QpQMht0SzA_qo6D1OMGp2UP7TSNFpkm0jsCYhdukWfpeb95SG_5SGZnLnrUUrK4L1llbHkYOgHjXqjcfqJnJ1uiiRGsTHkyChxLGZWeoFAGMS-RB227XpFdN2KvSH9GynZpWllQm9vsuOYmbdcHS_JSBcZsLjFmOicdMglKF0PJvSj"/>
+<div class="absolute inset-0 bg-surface/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-6 text-center backdrop-blur-sm">
+<div>
+<h4 class="font-['Newsreader'] text-xl italic mb-2">Glass Towers</h4>
+<p class="text-xs text-on-surface-variant">S3:E8 • Finale</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 mt-auto bg-[#0d0f0f] border-t border-slate-800/20 flex flex-col md:flex-row justify-between items-center px-12 gap-6">
+<div class="flex flex-col gap-2">
+<span class="font-['Newsreader'] text-lg italic text-slate-300">Watchlist</span>
+<p class="font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-slate-600">© 2024 Watchlist Digital Auteur. All Rights Reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-slate-600 hover:text-teal-400 transition-colors" href="#">Terms</a>
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-slate-600 hover:text-teal-400 transition-colors" href="#">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-slate-600 hover:text-teal-400 transition-colors" href="#">API</a>
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-slate-600 hover:text-teal-400 transition-colors" href="#">Press</a>
+</div>
+</footer>
+</main>
+<!-- Mobile Navigation Shell -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container/90 backdrop-blur-xl border-t border-outline-variant/20 h-20 flex items-center justify-around z-50">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] uppercase font-['Inter']">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-teal-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">live_tv</span>
+<span class="text-[10px] uppercase font-['Inter']">TV Shows</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">movie</span>
+<span class="text-[10px] uppercase font-['Inter']">Movies</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="text-[10px] uppercase font-['Inter']">Saved</span>
+</button>
+</div>
+<script>
+        function updateFilter(filterName, element) {
+            // Update Sidebar UI
+            document.querySelectorAll('aside button').forEach(btn => {
+                btn.classList.remove('sidebar-active');
+                btn.classList.add('text-slate-500');
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+            });
+            
+            element.classList.add('sidebar-active');
+            element.classList.remove('text-slate-500');
+            const activeIcon = element.querySelector('.material-symbols-outlined');
+            if (activeIcon) activeIcon.style.fontVariationSettings = "'FILL' 1";
+
+            // Update Breadcrumb & Page Titles
+            document.getElementById('breadcrumb-filter').textContent = filterName;
+            document.getElementById('section-title').textContent = filterName === 'Home' ? 'Trending Now' : filterName;
+            
+            const statusTag = document.getElementById('content-status-tag');
+            if (statusTag) {
+                statusTag.textContent = filterName === 'Home' ? 'Trending Now' : 'In your ' + filterName;
+            }
+
+            // Simple animation for content swap simulation
+            const wrapper = document.getElementById('filter-content-wrapper');
+            wrapper.style.opacity = '0';
+            wrapper.style.transform = 'translateY(10px)';
+            wrapper.style.transition = 'all 0.4s ease-out';
+            
+            setTimeout(() => {
+                wrapper.style.opacity = '1';
+                wrapper.style.transform = 'translateY(0)';
+            }, 50);
+        }
+    </script>
+</body></html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#71d7cd",
+                    "secondary": "#e9c176",
+                    "primary-container": "#00322e",
+                    "surface-dim": "#121414",
+                    "outline": "#8c9291",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#ac8c7e",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary": "#422b21",
+                    "error-container": "#93000a",
+                    "background": "#121414",
+                    "on-secondary": "#412d00",
+                    "secondary-fixed": "#ffdea5",
+                    "secondary-fixed-dim": "#e9c176",
+                    "surface-container-lowest": "#0d0f0f",
+                    "error": "#ffb4ab",
+                    "surface-container-high": "#282a2a",
+                    "surface-container-low": "#1a1c1c",
+                    "primary-fixed": "#8ef4e9",
+                    "tertiary-container": "#3c261c",
+                    "primary": "#71d7cd",
+                    "on-primary": "#003733",
+                    "on-secondary-container": "#dab36a",
+                    "outline-variant": "#424848",
+                    "inverse-primary": "#006a63",
+                    "surface-bright": "#383939",
+                    "primary-fixed-dim": "#71d7cd",
+                    "inverse-on-surface": "#2f3131",
+                    "tertiary-fixed-dim": "#e3bfb0",
+                    "tertiary-fixed": "#ffdbcc",
+                    "surface": "#121414",
+                    "tertiary": "#e3bfb0",
+                    "on-background": "#e2e2e2",
+                    "on-secondary-fixed": "#261900",
+                    "on-tertiary-fixed": "#2a170d",
+                    "on-primary-fixed": "#00201d",
+                    "on-secondary-fixed-variant": "#5d4201",
+                    "on-surface-variant": "#c2c8c7",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#604403",
+                    "on-surface": "#e2e2e2",
+                    "surface-container-highest": "#333535",
+                    "surface-container": "#1e2020",
+                    "inverse-surface": "#e2e2e2",
+                    "surface-variant": "#333535",
+                    "on-primary-container": "#35a299",
+                    "on-tertiary-fixed-variant": "#5a4136"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Manrope"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #121414;
+            color: #e2e2e2;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-slider::-webkit-slider-runnable-track {
+            background: #1e2020;
+            height: 2px;
+        }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: #71d7cd;
+            margin-top: -5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#121414]/70 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full shadow-[0_20px_40px_rgba(113,215,205,0.08)]">
+<div class="text-2xl font-['Newsreader'] italic font-bold text-slate-100">Watchlist</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 font-medium hover:text-slate-100 transition-all duration-300 ease-out hover:text-teal-300" href="#">Explore</a>
+<a class="text-slate-400 font-medium hover:text-slate-100 transition-all duration-300 ease-out hover:text-teal-300" href="#">Movies</a>
+<a class="text-slate-400 font-medium hover:text-slate-100 transition-all duration-300 ease-out hover:text-teal-300" href="#">TV Shows</a>
+</nav>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-teal-400 transition-colors">search</span>
+<span class="material-symbols-outlined text-teal-400 border-b border-teal-400/50 pb-1 cursor-pointer">account_circle</span>
+</div>
+</header>
+<main class="flex-grow pt-24 pb-12 px-6 md:px-24 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-12">
+<!-- Content Header -->
+<div class="md:col-span-12 mb-8">
+<h1 class="font-headline text-5xl md:text-6xl font-light italic text-on-surface">Artistic Personalization</h1>
+<p class="font-body text-on-surface-variant mt-4 text-lg max-w-2xl">Tailor your cinematic interface to match your aesthetic sensibility. Adjust tones, textures, and typography.</p>
+</div>
+<!-- Settings Grid -->
+<div class="md:col-span-8 space-y-16">
+<!-- Tone Selection Section -->
+<section>
+<div class="flex items-baseline gap-4 mb-8">
+<span class="font-label text-xs tracking-[0.2em] uppercase text-primary">01</span>
+<h2 class="font-headline text-3xl italic">UI Tone &amp; Atmosphere</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<!-- Tone Card 1 -->
+<button class="group relative aspect-[4/5] overflow-hidden rounded-lg bg-surface-container-low transition-all duration-500 hover:ring-1 ring-primary/40">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="Moody deep blue night sky with faint stars and cinematic soft focus gradient background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1OywtjyDaiLqeJPo7VCrCw9YXb29OqlMxpApdUlI5MHCjRieDEZqbLjah0Q1KBNLZkkIuR67zJl5Hanyyp-hlvEXJ-eSyEqKavhlZvXkdSsU9nq611vOBRMpfJXT1dNSx5HCFlaWDdwpXu_Tpwn4zupXGQSCb-8JQBfBKpmr4pgbZj_GenPP08J9ZrlF-8-ICoiGacj_sPKffMfo4GHY_upb_aun7_uUUA1NaAOL6BXJ782WURiDYMU5w-OzTozGD8eJR364eqwgF"/>
+<div class="absolute bottom-6 left-6 z-20 text-left">
+<p class="font-headline text-xl text-white italic">Midnight Blue</p>
+<p class="font-label text-[10px] tracking-widest text-slate-300 mt-1 uppercase">Deep Obsidian</p>
+</div>
+<div class="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</button>
+<!-- Tone Card 2 -->
+<button class="group relative aspect-[4/5] overflow-hidden rounded-lg bg-surface-container-low transition-all duration-500 border border-primary/40">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="Enchanted dense forest at dawn with mystical emerald light rays filtering through ancient trees" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEK1FR-fKARS6bDkX9VVfEu5AZYsIEACdErdYswASip80IqmhbyDg_dMgFxm80e5B0VmcPMIEBVPPlKrxL_MX7YoxRUHOGDwdFZj93P2ek6CP5bymKytHJ52zdzNPG83QWCmDScTcNqOYoyoVhfiaczI-6i9Bxcd8N1802MOrpJ6xtmIl6vMqIRRKyWBC4VXhDgD2kgEWRo3Eo5W8-cFhjRO8u9vg0SHVqBu-n8T6-zdL1_sZXbZWiTFPtcf-VZn1QJOIb5PSxmUUu"/>
+<div class="absolute bottom-6 left-6 z-20 text-left">
+<p class="font-headline text-xl text-primary italic">Emerald Forest</p>
+<p class="font-label text-[10px] tracking-widest text-slate-300 mt-1 uppercase">Verdant Depth</p>
+</div>
+<div class="absolute top-4 right-4 z-20 opacity-100">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</button>
+<!-- Tone Card 3 -->
+<button class="group relative aspect-[4/5] overflow-hidden rounded-lg bg-surface-container-low transition-all duration-500 hover:ring-1 ring-secondary/40">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="Classic vintage cinema projector lens with warm golden amber light leak effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi7im9coMQd2Z0qrzvMNxnrj-qgWoDLFScFXZ2Wg8P1438AkWU_ksvSE1cYVCGkBmfgN-s0cwg6PlMLfZRF28phTEEnNx_k_IAPbkcYn5JUTHGFRHujlvfuLb5vK6v9xv74prHKAWGiw_AqpbXsL_tI1xoccOlg1Ubym_6rfM0WWNfXbNx2c_3SBcohw-AbXF93t1a_OCN6CyOpj5qNaOszKLn1pDttYre48LjJ44-DSrWHRnSFyYKPhVYjKuvFoXFLLPMP2R_QGkl"/>
+<div class="absolute bottom-6 left-6 z-20 text-left">
+<p class="font-headline text-xl text-white italic">Classic Cinema</p>
+<p class="font-label text-[10px] tracking-widest text-slate-300 mt-1 uppercase">Golden Era</p>
+</div>
+</button>
+</div>
+</section>
+<!-- Visual Fidelity Section -->
+<section>
+<div class="flex items-baseline gap-4 mb-10">
+<span class="font-label text-xs tracking-[0.2em] uppercase text-primary">02</span>
+<h2 class="font-headline text-3xl italic">Visual Fidelity</h2>
+</div>
+<div class="grid grid-cols-1 gap-12">
+<!-- Glassmorphism Slider -->
+<div class="space-y-6">
+<div class="flex justify-between items-end">
+<div>
+<label class="font-body text-on-surface text-lg">Backdrop Transparency</label>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-tighter mt-1">Controls glassmorphism intensity</p>
+</div>
+<span class="font-label text-sm text-primary">70%</span>
+</div>
+<input class="w-full appearance-none h-[2px] bg-surface-container-highest cursor-pointer accent-primary custom-slider" max="100" min="0" type="range" value="70"/>
+</div>
+<!-- Toggle Switches -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+<div class="flex items-center justify-between p-6 rounded-lg bg-surface-container-low/50 transition-colors hover:bg-surface-container-low">
+<div>
+<span class="font-body font-medium block">Film Grain Overlay</span>
+<span class="font-label text-[10px] text-on-surface-variant tracking-wider uppercase">Analog texture</span>
+</div>
+<button class="w-12 h-6 bg-primary rounded-full relative transition-colors duration-300">
+<span class="absolute right-1 top-1 w-4 h-4 bg-primary-container rounded-full shadow-sm"></span>
+</button>
+</div>
+<div class="flex items-center justify-between p-6 rounded-lg bg-surface-container-low/50 transition-colors hover:bg-surface-container-low">
+<div>
+<span class="font-body font-medium block">Dynamic Lighting</span>
+<span class="font-label text-[10px] text-on-surface-variant tracking-wider uppercase">Poster light bleeds</span>
+</div>
+<button class="w-12 h-6 bg-surface-container-highest rounded-full relative transition-colors duration-300">
+<span class="absolute left-1 top-1 w-4 h-4 bg-outline rounded-full shadow-sm"></span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Typography Section -->
+<section>
+<div class="flex items-baseline gap-4 mb-10">
+<span class="font-label text-xs tracking-[0.2em] uppercase text-primary">03</span>
+<h2 class="font-headline text-3xl italic">Typography Dialogue</h2>
+</div>
+<div class="space-y-4">
+<div class="group flex items-center justify-between p-6 rounded-lg border border-primary/20 bg-surface-container-low transition-all cursor-pointer">
+<div class="flex items-center gap-6">
+<span class="text-3xl font-['Newsreader'] italic text-primary">Aa</span>
+<div>
+<p class="font-headline text-lg">Literary Serif (Newsreader)</p>
+<p class="font-body text-xs text-on-surface-variant">Best for editorial headlines and titles.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary">radio_button_checked</span>
+</div>
+<div class="group flex items-center justify-between p-6 rounded-lg bg-surface-container-low/30 hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="flex items-center gap-6">
+<span class="text-3xl font-['Manrope'] font-bold text-slate-400">Aa</span>
+<div>
+<p class="font-body text-lg font-bold">Modern Sans (Manrope)</p>
+<p class="font-body text-xs text-on-surface-variant">Best for functional, data-heavy layouts.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-600">radio_button_unchecked</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar / Preview -->
+<aside class="md:col-span-4 space-y-8">
+<div class="sticky top-32">
+<div class="bg-surface-container-low rounded-lg p-8 border border-outline-variant/10">
+<span class="font-label text-[10px] tracking-[0.3em] uppercase text-secondary mb-6 block">Interface Preview</span>
+<div class="relative rounded overflow-hidden mb-6 aspect-video">
+<img class="w-full h-full object-cover" data-alt="Cinematic wide shot of a solitary theater screen in a dark minimalist space with teal and gold ambient light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIE5Za4_x3U3s9vYwWeWFYo77E1JTp4ZOzM2a9Rtexh5BOA_8_dvcSvEoGDTBsisAnvFEXWVEFzL8HUj_Kjv_aG9e83KBqg8WACTNg3VvSm0g8YtHVDpwumAtIokvNb0vYTUDZYOc3rlb1S4HG6VTTDU5ogw7_quncnJk_u1ycG9UMuBI_N_NDLoUEn8ZZwWDZI1TQpv-dZ1DDEQ_4hmCMzBYO_2YPdmLgpFHuu5yI1orrpxxtB4O5cOwiOS52QjYir8K6NCRa0fXv"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<h3 class="font-headline text-2xl italic text-white">Stalker</h3>
+<p class="font-label text-[10px] text-primary tracking-widest uppercase">Andrei Tarkovsky</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-2/3 bg-primary"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-label uppercase tracking-tighter text-on-surface-variant">
+<span>Runtime: 161m</span>
+<span>Score: 8.9</span>
+</div>
+<button class="w-full py-3 bg-gradient-to-r from-primary to-primary-container text-on-primary font-body text-sm font-bold rounded shadow-lg shadow-primary/10 uppercase tracking-widest mt-4">
+                            Update Watchlist
+                        </button>
+</div>
+</div>
+<div class="mt-8 p-6 bg-surface-container-lowest rounded-lg border-l-2 border-secondary/40">
+<p class="font-headline italic text-secondary text-lg">"Cinema is a matter of what's in the frame and what's out."</p>
+<p class="font-label text-[10px] mt-2 uppercase tracking-widest text-on-surface-variant">— Martin Scorsese</p>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0d0f0f] w-full py-12 mt-auto border-t border-slate-800/20 flex flex-col md:flex-row justify-between items-center px-12 gap-6">
+<div class="font-['Newsreader'] text-lg italic text-slate-300">Watchlist</div>
+<div class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-slate-600 flex gap-8">
+<a class="hover:text-teal-400 transition-colors" href="#">Terms</a>
+<a class="hover:text-teal-400 transition-colors" href="#">Privacy</a>
+<a class="hover:text-teal-400 transition-colors" href="#">API</a>
+<a class="hover:text-teal-400 transition-colors" href="#">Press</a>
+</div>
+<div class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-slate-600">
+            © 2024 Watchlist Digital Auteur. All Rights Reserved.
+        </div>
+</footer>
+</body></html>

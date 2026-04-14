@@ -1,0 +1,229 @@
+<html class="dark" lang="en"><head></head><body class="bg-surface-dim selection:bg-primary-container selection:text-primary">```html
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Watchlist - The Digital Auteur</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#e64a4a",
+                    "secondary": "#f4a261",
+                    "primary-container": "#450a0a",
+                    "surface-dim": "#1a0f0f",
+                    "outline": "#a38e8e",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#e3d2c8",
+                    "on-primary-fixed-variant": "#7f1d1d",
+                    "on-tertiary": "#4a3728",
+                    "error-container": "#850000",
+                    "background": "#0f0808",
+                    "on-secondary": "#451e00",
+                    "secondary-fixed": "#ffdfca",
+                    "secondary-fixed-dim": "#f4a261",
+                    "surface-container-lowest": "#0a0505",
+                    "error": "#ffb4ab",
+                    "surface-container-high": "#2d1a1a",
+                    "surface-container-low": "#1f1111",
+                    "primary-fixed": "#ffdad9",
+                    "tertiary-container": "#5a4538",
+                    "primary": "#e64a4a",
+                    "on-primary": "#450000",
+                    "on-secondary-container": "#ffc48d",
+                    "outline-variant": "#534343",
+                    "inverse-primary": "#ffb4ab",
+                    "surface-bright": "#423232",
+                    "primary-fixed-dim": "#e64a4a",
+                    "inverse-on-surface": "#1a0f0f",
+                    "tertiary-fixed-dim": "#e3c2b0",
+                    "tertiary-fixed": "#ffdbcc",
+                    "surface": "#1a0f0f",
+                    "tertiary": "#e3c2b0",
+                    "on-background": "#f0e0e0",
+                    "on-secondary-fixed": "#2c1000",
+                    "on-tertiary-fixed": "#2a170d",
+                    "on-primary-fixed": "#3b0000",
+                    "on-secondary-fixed-variant": "#632c00",
+                    "on-surface-variant": "#d8c2c2",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#693100",
+                    "on-surface": "#f0e0e0",
+                    "surface-container-highest": "#382525",
+                    "surface-container": "#241515",
+                    "inverse-surface": "#f0e0e0",
+                    "surface-variant": "#534343",
+                    "on-primary-container": "#ffdad9",
+                    "on-tertiary-fixed-variant": "#735a4a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Manrope", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #0f0808;
+            color: #f0e0e0;
+        }
+    </style>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#0f0808]/80 backdrop-blur-xl flex justify-between items-center px-8 h-20 shadow-[0_20px_40px_rgba(230,74,74,0.05)]">
+<div class="text-2xl font-['Newsreader'] italic font-bold text-on-surface">Watchlist</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-primary border-b border-primary/50 pb-1 font-['Inter'] text-xs uppercase tracking-widest" href="#">Explore</a>
+<a class="text-outline font-medium hover:text-on-surface transition-all duration-300 ease-out hover:text-secondary font-['Inter'] text-xs uppercase tracking-widest" href="#">Movies</a>
+<a class="text-outline font-medium hover:text-on-surface transition-all duration-300 ease-out hover:text-secondary font-['Inter'] text-xs uppercase tracking-widest" href="#">TV Shows</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-outline hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-outline hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+<main class="relative min-h-screen">
+<!-- Hero Section with New Background -->
+<section class="relative min-h-screen flex items-center pt-20 px-8 md:px-16 overflow-hidden">
+<!-- Background Image with Warm Gradient Overlay -->
+<div class="absolute inset-0 z-0">
+<img alt="Cinematic interior" class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida/ADBb0uhLy50v1ef6FPOSEPri5MVvIEgkLD3u_ZxZZ07xXYlYbzP-I8A69IvOK0zQc5dHmumaweB80XMPRNX0W78-ZxG7nEZJbCWPEoVb9sV0k27fx-F5ppCvdGby56RvWqKXp9EVzA5QbnATLgwiGecy6YtFcGfCVBTJmPmnTnSR0A8GGml_LXEYFP_vAdlrnjg_CuoqRE_fV1suYFrDnNjxrDqyjvd78zAANDHCZdpjGzTRfwwzJIMTmDcUDniT4-ftFvCJZRXNZyg6k00"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-dim via-surface-dim/80 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 w-full grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<!-- Artistic Introduction -->
+<div class="md:col-span-7 space-y-8">
+<h1 class="font-headline italic font-bold text-6xl md:text-8xl lg:text-9xl tracking-tighter text-on-surface leading-none drop-shadow-2xl">
+                        The Digital <br/> <span class="text-primary">Auteur.</span>
+</h1>
+<p class="font-body text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed font-light drop-shadow-lg">
+                        Elevate your viewing experience beyond the algorithm. A curated gallery for those who see cinema as more than just a pastime.
+                    </p>
+<div class="flex gap-6 pt-4">
+<div class="h-[1px] w-12 bg-primary self-center"></div>
+<span class="font-label text-xs uppercase tracking-[0.3em] text-secondary">Discover the Collection</span>
+</div>
+</div>
+<!-- Minimalist Auth Form -->
+<div class="md:col-span-5 lg:col-span-4 lg:col-start-9">
+<div class="bg-surface-container-low/90 p-8 md:p-10 rounded-lg shadow-2xl backdrop-blur-md border border-outline-variant/20">
+<h2 class="font-headline text-3xl italic text-on-surface mb-8">Access the Vault</h2>
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="font-label text-[10px] uppercase tracking-widest text-outline">Email Address</label>
+<input class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/30 focus:ring-primary text-on-surface py-4 px-4 rounded-lg font-body transition-all" placeholder="curator@watchlist.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-[10px] uppercase tracking-widest text-outline">Password</label>
+<input class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/30 focus:ring-primary text-on-surface py-4 px-4 rounded-lg font-body transition-all" placeholder="••••••••" type="password"/>
+</div>
+<div class="pt-4 space-y-4">
+<button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-white font-body font-bold rounded-lg hover:brightness-110 transition-all shadow-lg shadow-primary/20">
+                                    Sign In
+                                </button>
+<button class="w-full py-4 bg-transparent border border-outline-variant/30 text-secondary font-body rounded-lg hover:bg-secondary/5 transition-all">
+                                    Create Account
+                                </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Bento Grid -->
+<section class="py-32 px-8 md:px-16 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-auto md:h-[600px]">
+<!-- Large Feature -->
+<div class="md:col-span-2 md:row-span-2 bg-surface-container-low rounded-lg p-10 flex flex-col justify-end group overflow-hidden relative">
+<img alt="Curated lists" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700" data-alt="black and white moody close-up of a vintage film projector lens with dust particles dancing in the light beam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWylQ58QLyA_hdBscSfNMhSE2l2BAe3iuZ5seCjcfk9x4uHRmfT_Yi3x8xnhsbdXezJyMkw_ASUSj9b9zgMrZr7pooM1uWSPOWiOZ1oOyAQiN4sh7PnbYD2bRcwEKy5FMxD3qleYBEKex_v_1SFlYmq79qF4UmR6hBKbBYs24wTvaoYcKsC7lq32EHrdLRdOl3uVAZ4e9-uHuzpCqau_sk6U4wl8PX6VEN7epjz0y9T2ASr21LgP27taB4Id59154RBmh9OJNaQqJD"/>
+<div class="relative z-10">
+<span class="font-label text-primary text-[10px] uppercase tracking-[0.2em] mb-4 block">Personal Gallery</span>
+<h3 class="font-headline text-4xl italic text-on-surface mb-4">Master Your Library</h3>
+<p class="font-body text-on-surface-variant max-w-sm">Organize your films with the precision of a museum curator. Custom tags, private notes, and aesthetic layouts.</p>
+</div>
+</div>
+<!-- Mid Feature 1 -->
+<div class="md:col-span-2 bg-surface-container-high rounded-lg p-8 flex items-center gap-8 border border-outline-variant/10">
+<div class="w-1/3 aspect-square bg-surface-container-lowest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-secondary" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div class="w-2/3">
+<h4 class="font-headline text-2xl italic text-on-surface mb-2">Auteur AI</h4>
+<p class="font-body text-sm text-on-surface-variant">Recommendations that understand style, cinematography, and mood, not just genres.</p>
+</div>
+</div>
+<!-- Mid Feature 2 -->
+<div class="md:col-span-1 bg-surface-container-low rounded-lg p-8 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="groups">groups</span>
+<div>
+<h4 class="font-headline text-xl italic text-on-surface mb-1">Critique</h4>
+<p class="font-body text-xs text-on-surface-variant">Connect with a global community of cinema scholars.</p>
+</div>
+</div>
+<!-- Mid Feature 3 -->
+<div class="md:col-span-1 bg-surface-container-low rounded-lg p-8 flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="analytics">analytics</span>
+<div>
+<h4 class="font-headline text-xl italic text-on-surface mb-1">Insights</h4>
+<p class="font-body text-xs text-on-surface-variant">Visual deep-dives into your viewing habits and history.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Content Section -->
+<section class="py-32 px-8 md:px-16 bg-surface-dim">
+<div class="max-w-4xl mx-auto text-center space-y-12">
+<h2 class="font-headline text-5xl md:text-7xl text-on-surface leading-tight">
+                    Beyond the <span class="italic text-outline">Ordinary</span> Stream.
+                </h2>
+<div class="w-20 h-px bg-primary mx-auto"></div>
+<p class="font-body text-xl text-on-surface-variant leading-relaxed font-light italic">
+                    "Cinema is a matter of what's in the frame and what's out." 
+                    <span class="block not-italic font-label text-xs uppercase tracking-widest mt-4 text-secondary">— Martin Scorsese</span>
+</p>
+<div class="pt-8">
+<button class="px-10 py-5 bg-surface-container-highest text-primary border border-primary/20 font-label text-xs uppercase tracking-[0.2em] hover:bg-primary/10 transition-all">
+                        Begin Your Journey
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 mt-auto bg-background border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center px-12 gap-6">
+<div class="font-['Newsreader'] text-lg italic text-on-surface">Watchlist</div>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-outline hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-outline hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-outline hover:text-primary transition-colors" href="#">API</a>
+<a class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-outline hover:text-primary transition-colors" href="#">Press</a>
+</div>
+<div class="font-['Inter'] text-xs uppercase tracking-[0.2em] text-outline">
+            © 2024 Watchlist Digital Auteur. All Rights Reserved.
+        </div>
+</footer>
+```</body></html>

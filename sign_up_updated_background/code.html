@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#ac8c7e",
+                        "outline-variant": "#424848",
+                        "outline": "#8c9291",
+                        "surface-tint": "#71d7cd",
+                        "surface-container": "#1e2020",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#e9c176",
+                        "tertiary-fixed-dim": "#e3bfb0",
+                        "surface-container-highest": "#333535",
+                        "on-tertiary-fixed-variant": "#5a4136",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-surface-variant": "#c2c8c7",
+                        "on-primary-fixed": "#00201d",
+                        "tertiary": "#e3bfb0",
+                        "inverse-surface": "#e2e2e2",
+                        "on-tertiary-fixed": "#2a170d",
+                        "background": "#121414",
+                        "secondary-container": "#604403",
+                        "surface": "#121414",
+                        "tertiary-container": "#3c261c",
+                        "on-background": "#e2e2e2",
+                        "primary-fixed": "#8ef4e9",
+                        "inverse-on-surface": "#2f3131",
+                        "on-secondary": "#412d00",
+                        "on-primary-container": "#35a299",
+                        "surface-container-lowest": "#0d0f0f",
+                        "on-error": "#690005",
+                        "primary": "#71d7cd",
+                        "inverse-primary": "#006a63",
+                        "secondary-fixed": "#ffdea5",
+                        "on-surface": "#e2e2e2",
+                        "primary-container": "#00322e",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#dab36a",
+                        "on-secondary-fixed": "#261900",
+                        "on-primary-fixed-variant": "#00504a",
+                        "on-tertiary": "#422b21",
+                        "primary-fixed-dim": "#71d7cd",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "surface-bright": "#383939",
+                        "surface-container-low": "#1a1c1c",
+                        "surface-container-high": "#282a2a",
+                        "surface-variant": "#333535",
+                        "on-primary": "#003733",
+                        "surface-dim": "#121414",
+                        "secondary": "#e9c176"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader"],
+                        "body": ["Manrope"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cinematic-gradient {
+            background: linear-gradient(135deg, #71d7cd 0%, #00322e 100%);
+        }
+        .glass-panel {
+            background: rgba(18, 20, 20, 0.85);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#121414]/70 backdrop-blur-xl shadow-[0_40px_40px_rgba(113,215,205,0.08)] flex justify-between items-center px-8 py-4 w-full">
+<div class="font-['Newsreader'] italic text-[#e2e2e2] text-2xl tracking-tight">Watchlist</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-[#c2c8c7] hover:text-[#71d7cd] transition-colors duration-300 active:scale-95 transition-transform font-['Newsreader'] italic text-lg" href="#">Login</a>
+<a class="text-[#71d7cd] font-bold font-['Newsreader'] italic text-lg hover:text-[#71d7cd] transition-colors duration-300 active:scale-95 transition-transform" href="#">Sign Up</a>
+</nav>
+</header>
+<main class="min-h-screen flex items-center justify-center relative overflow-hidden">
+<!-- Hero Background Image Layer -->
+<div class="absolute inset-0 z-0">
+<img alt="Cinematic Noir Scene" class="w-full h-full object-cover" data-alt="dramatic high-contrast cinematic wide shot of a rainy urban street at night with neon signs reflecting in puddles and deep shadows" src="https://lh3.googleusercontent.com/aida/ADBb0uj9f8yDBd1GLf5zN330KjA4c3Oi5Rxf2MCJA1NSHvgzmf7m7oSQxN7Go8HjFgap4pYnJc3MY9HaUIljME_RXOe_7EY0K3g7IwtANpuXup0vlt2C2VPPyJHd1vNWIf_AWgnme5AicvyCyF_zbNzlsjRzcJVUzkShqwTybbU8hdzu4db0g4x_0fxt5Ev5vvpd8aIqqE_E-6ULNugPfPO1SoOL6kG3E1UmYFt8KSrC_BZB8WRP4Cjd1HrK0eBHgt4K8jTOcZNm-Z0UHA"/>
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/80 to-background"></div>
+</div>
+<div class="relative z-10 w-full max-w-6xl px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-16">
+<!-- Brand Editorial Section -->
+<div class="hidden lg:block lg:w-1/2 space-y-6">
+<h1 class="font-headline italic text-7xl text-on-surface leading-none tracking-tighter">
+                    Become the <br/><span class="text-primary">Digital Auteur.</span>
+</h1>
+<p class="font-body text-on-surface-variant text-xl max-w-md leading-relaxed">
+                    Curate your personal gallery of cinema. A space designed for those who see film as more than just entertainment.
+                </p>
+<div class="flex items-center gap-4 pt-8">
+<div class="h-px w-12 bg-outline-variant/30"></div>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Est. 2024 Watchlist Collective</span>
+</div>
+</div>
+<!-- Sign-Up Card -->
+<div class="w-full lg:w-5/12">
+<div class="glass-panel p-8 lg:p-10 rounded-lg shadow-2xl border border-outline-variant/10 shadow-primary/5">
+<div class="mb-8">
+<h2 class="font-headline italic text-3xl text-on-surface mb-2">Create Account</h2>
+<p class="font-body text-sm text-on-surface-variant">Join the community of cinema curators.</p>
+</div>
+<form class="space-y-6">
+<!-- Full Name -->
+<div class="space-y-1">
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant ml-1">Full Name</label>
+<input class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 focus:ring-primary focus:bg-surface-container-high rounded-lg p-3 text-on-surface placeholder:text-outline-variant/50 transition-all" placeholder="Orson Welles" type="text"/>
+</div>
+<!-- Email -->
+<div class="space-y-1">
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant ml-1">Email</label>
+<input class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 focus:ring-primary focus:bg-surface-container-high rounded-lg p-3 text-on-surface placeholder:text-outline-variant/50 transition-all" placeholder="auteur@watchlist.com" type="email"/>
+</div>
+<!-- Password -->
+<div class="space-y-1">
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant ml-1">Password</label>
+<input class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/20 focus:ring-primary focus:bg-surface-container-high rounded-lg p-3 text-on-surface placeholder:text-outline-variant/50 transition-all" placeholder="••••••••" type="password"/>
+</div>
+<!-- Cinematic Style Preference -->
+<div class="space-y-2">
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant ml-1">Select Your Cinematic Style</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="group flex flex-col items-center gap-2 p-3 rounded-lg bg-surface-container-lowest ring-1 ring-outline-variant/20 hover:ring-secondary transition-all" type="button">
+<span class="material-symbols-outlined text-secondary opacity-70 group-hover:opacity-100">filter_b_and_w</span>
+<span class="font-label text-[10px] text-on-surface-variant group-hover:text-secondary">Noir</span>
+</button>
+<button class="group flex flex-col items-center gap-2 p-3 rounded-lg bg-surface-container-lowest ring-1 ring-outline-variant/20 hover:ring-primary transition-all" type="button">
+<span class="material-symbols-outlined text-primary opacity-70 group-hover:opacity-100">palette</span>
+<span class="font-label text-[10px] text-on-surface-variant group-hover:text-primary">Technicolor</span>
+</button>
+<button class="group flex flex-col items-center gap-2 p-3 rounded-lg bg-surface-container-lowest ring-1 ring-outline-variant/20 hover:ring-on-surface transition-all" type="button">
+<span class="material-symbols-outlined text-on-surface opacity-70 group-hover:opacity-100">crop_square</span>
+<span class="font-label text-[10px] text-on-surface-variant group-hover:text-on-surface">Minimalist</span>
+</button>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="pt-4 space-y-4">
+<button class="w-full cinematic-gradient text-on-primary font-body font-bold py-3.5 rounded-lg active:scale-95 transition-transform shadow-lg shadow-primary/10" type="submit">
+                                Sign Up
+                            </button>
+<div class="text-center">
+<a class="font-body text-sm text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">
+                                    Already have an account? <span class="text-secondary font-medium">Login</span>
+</a>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-[#424848]/10 bg-[#0d0f0f] flex flex-col items-center gap-4 w-full relative z-10">
+<p class="font-['Inter'] text-[10px] uppercase tracking-widest text-[#c2c8c7]">© 2024 Watchlist. Crafted for the Digital Auteur.</p>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-[10px] uppercase tracking-widest text-[#c2c8c7] hover:text-[#71d7cd] transition-opacity hover:opacity-80" href="#">Terms</a>
+<a class="font-['Inter'] text-[10px] uppercase tracking-widest text-[#c2c8c7] hover:text-[#71d7cd] transition-opacity hover:opacity-80" href="#">Privacy</a>
+<a class="font-['Inter'] text-[10px] uppercase tracking-widest text-[#c2c8c7] hover:text-[#71d7cd] transition-opacity hover:opacity-80" href="#">Support</a>
+</div>
+</footer>
+</body></html>
