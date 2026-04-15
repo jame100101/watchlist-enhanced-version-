@@ -73,6 +73,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     });
+
+    // Language change handler — re-render dynamic content
+    window.addEventListener('langchange', async () => {
+        applyTranslations();
+        // Re-fetch trending data in new language
+        await loadTrendingData();
+        // Re-apply current filter labels
+        if (currentFilter !== 'all') {
+            applyFilter(currentFilter);
+        }
+        // Update greeting
+        const user = await AuthAPI.getMe();
+        if (user) updateUserDisplay(user);
+    });
 });
 
 // ── Auth Functions ────────────────────────────
@@ -81,7 +95,7 @@ window.login = async () => {
     const password = document.getElementById('login-password').value;
 
     if (!email || !password) {
-        showToast('Please enter both email and password', 'warning');
+        showToast(t('toast.enterBoth'), 'warning');
         return;
     }
 
@@ -89,19 +103,19 @@ window.login = async () => {
     const loginBtn = document.querySelector('#view-landing button[onclick="login()"]');
     const originalText = loginBtn ? loginBtn.innerHTML : '';
     if (loginBtn) {
-        loginBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Signing In...';
+        loginBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">progress_activity</span> ${t('toast.signingIn')}`;
         loginBtn.disabled = true;
     }
 
     try {
         const data = await AuthAPI.login(email, password);
-        showToast(`Welcome back, ${data.user.name || data.user.email}!`, 'success');
+        showToast(`${t('toast.welcomeBack')} ${data.user.name || data.user.email}!`, 'success');
         updateUserDisplay(data.user);
         await loadTrendingData();
         setupSearch();
         switchToView('home');
     } catch (err) {
-        showToast(err.message || 'Login failed', 'error');
+        showToast(err.message || t('toast.loginFailed'), 'error');
     } finally {
         if (loginBtn) {
             loginBtn.innerHTML = originalText;
@@ -116,35 +130,35 @@ window.signup = async () => {
     const password = document.getElementById('signup-password').value;
 
     if (!email || !password) {
-        showToast('Please fill in all fields', 'warning');
+        showToast(t('toast.fillFields'), 'warning');
         return;
     }
     if (password.length < 6) {
-        showToast('Password must be at least 6 characters', 'warning');
+        showToast(t('toast.pwMin'), 'warning');
         return;
     }
 
     const signupBtn = document.querySelector('#view-signup button[onclick="signup()"]');
     const originalText = signupBtn ? signupBtn.innerHTML : '';
     if (signupBtn) {
-        signupBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Creating...';
+        signupBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">progress_activity</span> ${t('toast.creating')}`;
         signupBtn.disabled = true;
     }
 
     try {
         const data = await AuthAPI.signup(name, email, password);
         if (data.needsVerification) {
-            showToast('Account created! Check your email to verify, then sign in.', 'info');
+            showToast(t('toast.accountCreated'), 'info');
             switchToView('landing');
         } else {
-            showToast(`Welcome, ${data.user.name || data.user.email}!`, 'success');
+            showToast(`${t('toast.welcome')} ${data.user.name || data.user.email}!`, 'success');
             updateUserDisplay(data.user);
             await loadTrendingData();
             setupSearch();
             switchToView('home');
         }
     } catch (err) {
-        showToast(err.message || 'Signup failed', 'error');
+        showToast(err.message || t('toast.signupFailed'), 'error');
     } finally {
         if (signupBtn) {
             signupBtn.innerHTML = originalText;
@@ -155,28 +169,28 @@ window.signup = async () => {
 
 window.logout = async () => {
     await AuthAPI.logout();
-    showToast('Signed out successfully', 'info');
+    showToast(t('toast.signedOut'), 'info');
     switchToView('landing');
 };
 
 function updateGreeting(nameFallback) {
     const hr = new Date().getHours();
-    let greeting = 'Good evening';
-    let sub = "Tonight's mood suggests something <span class=\"text-secondary italic\">noir and contemplative</span>. Ready for more?";
+    let greetKey = 'home.greetEvening';
+    let subKey = 'home.subEvening';
     
     if (hr >= 5 && hr < 12) {
-        greeting = 'Good morning';
-        sub = "Start your day with some <span class=\"text-secondary italic\">light and inspiring</span> cinema. What's on today's watchlist?";
+        greetKey = 'home.greetMorning';
+        subKey = 'home.subMorning';
     } else if (hr >= 12 && hr < 18) {
-        greeting = 'Good afternoon';
-        sub = "Take a midday break with some <span class=\"text-secondary italic\">engaging storytelling</span>. Ready to dive in?";
+        greetKey = 'home.greetAfternoon';
+        subKey = 'home.subAfternoon';
     }
     
     const textNode = document.getElementById('greeting-text');
-    if (textNode) textNode.textContent = greeting;
+    if (textNode) textNode.textContent = t(greetKey);
     
     const subNode = document.getElementById('greeting-subtext');
-    if (subNode) subNode.innerHTML = sub;
+    if (subNode) subNode.innerHTML = t(subKey);
     
     const nameNode = document.getElementById('greeting-name');
     if (nameNode) nameNode.textContent = nameFallback;
@@ -289,8 +303,8 @@ window.openDetails = async (id, mediaType) => {
     document.getElementById('details-title').textContent = isTv ? item.name : item.title;
 
     const date = isTv ? item.first_air_date : item.release_date;
-    document.getElementById('details-meta').textContent = date ? date.split('-')[0] : 'Unknown Year';
-    document.getElementById('details-desc').textContent = item.overview || 'No description available.';
+    document.getElementById('details-meta').textContent = date ? date.split('-')[0] : t('details.unknownYear');
+    document.getElementById('details-desc').textContent = item.overview || t('details.noDesc');
 
     const watchBtn = document.getElementById('details-watch-btn');
     if (watchBtn) {
@@ -301,7 +315,7 @@ window.openDetails = async (id, mediaType) => {
     await updateWatchlistDropdownUI();
 
     // Fetch and render Cast
-    document.getElementById('details-cast').innerHTML = '<span class="text-xs text-outline">Loading cast...</span>';
+    document.getElementById('details-cast').innerHTML = `<span class="text-xs text-outline">${t('details.loadingCast')}</span>`;
     const credits = await API.getCredits(item.id, mediaType);
     if (credits && credits.cast && credits.cast.length > 0) {
         let castHtml = '';
@@ -320,7 +334,7 @@ window.openDetails = async (id, mediaType) => {
         }
         document.getElementById('details-cast').innerHTML = castHtml;
     } else {
-        document.getElementById('details-cast').innerHTML = '<span class="text-xs text-outline">Cast not available</span>';
+        document.getElementById('details-cast').innerHTML = `<span class="text-xs text-outline">${t('details.noCast')}</span>`;
     }
 };
 
@@ -340,7 +354,7 @@ window.toggleWatchlistDropdown = (e) => {
 
 // ── Library Save/Toggle (Supabase-backed) ─────
 window.toggleFavorite = async () => {
-    if (!Session.isLoggedIn()) return showToast('Please sign in first', 'warning');
+    if (!Session.isLoggedIn()) return showToast(t('toast.signInFirst'), 'warning');
     if (!currentDetailItem) return;
 
     try {
@@ -360,16 +374,16 @@ window.toggleFavorite = async () => {
             itemData
         );
 
-        showToast(newFav ? '❤️ Added to Favorites!' : 'Removed from Favorites', newFav ? 'success' : 'info');
+        showToast(newFav ? t('toast.addedFav') : t('toast.removedFav'), newFav ? 'success' : 'info');
         await updateWatchlistDropdownUI();
     } catch (err) {
-        showToast('Failed to update favorite', 'error');
+        showToast(t('toast.failedFav'), 'error');
         console.error(err);
     }
 };
 
 window.saveToLibrary = async (status) => {
-    if (!Session.isLoggedIn()) return showToast('Please sign in first', 'warning');
+    if (!Session.isLoggedIn()) return showToast(t('toast.signInFirst'), 'warning');
     if (!currentDetailItem) return;
 
     try {
@@ -391,19 +405,19 @@ window.saveToLibrary = async (status) => {
         );
 
         const statusLabels = {
-            'watched': '✅ Marked as Watched',
-            'watching': '▶️ Marked as Watching',
-            'to-watch': '🔖 Added to Watch Later'
+            'watched': t('toast.watched'),
+            'watching': t('toast.watching'),
+            'to-watch': t('toast.toWatch')
         };
 
         showToast(
-            newStatus ? statusLabels[newStatus] : 'Status removed',
+            newStatus ? statusLabels[newStatus] : t('toast.statusRemoved'),
             newStatus ? 'success' : 'info'
         );
 
         await updateWatchlistDropdownUI();
     } catch (err) {
-        showToast('Failed to update status', 'error');
+        showToast(t('toast.failedStatus'), 'error');
         console.error(err);
     }
 };
@@ -492,12 +506,12 @@ window.applyFilter = async (filterType, element = null) => {
     if (refreshT) refreshT.style.display = filterType === 'all' ? 'flex' : 'none';
 
     // Label mappings
-    const namesM = { 'all': 'Movies', 'watched': 'Watched Movies', 'watching': 'Watching Now', 'to-watch': 'Must Watch', 'favorites': 'Favorite Films' };
-    const namesT = { 'all': 'TV Shows', 'watched': 'Watched TV Shows', 'watching': 'Watching Now', 'to-watch': 'Must Watch', 'favorites': 'Favorite Shows' };
+    const namesM = { 'all': t('fl.movies.all'), 'watched': t('fl.movies.watched'), 'watching': t('fl.movies.watching'), 'to-watch': t('fl.movies.toWatch'), 'favorites': t('fl.movies.favorites') };
+    const namesT = { 'all': t('fl.tv.all'), 'watched': t('fl.tv.watched'), 'watching': t('fl.tv.watching'), 'to-watch': t('fl.tv.toWatch'), 'favorites': t('fl.tv.favorites') };
 
     if (level === 'movies') {
         const titleM = document.getElementById('library-title');
-        if (titleM) titleM.textContent = namesM[filterType] || 'Movies';
+        if (titleM) titleM.textContent = namesM[filterType] || t('fl.movies.all');
 
         if (filterType === 'all') {
             const data = await API.fetchTrending('movie', 'day', window.currentTrendingPage['movie']);
@@ -520,7 +534,7 @@ window.applyFilter = async (filterType, element = null) => {
     }
     else if (level === 'tv') {
         const titleT = document.getElementById('library-title-tv');
-        if (titleT) titleT.textContent = namesT[filterType] || 'TV Shows';
+        if (titleT) titleT.textContent = namesT[filterType] || t('fl.tv.all');
 
         if (filterType === 'all') {
             const data = await API.fetchTrending('tv', 'week', window.currentTrendingPage['tv']);
@@ -565,34 +579,34 @@ function getEmptyMessage(filterType) {
     const messages = {
         'watched': {
             icon: 'visibility',
-            title: 'No watched titles yet',
-            subtitle: 'Start marking films and shows you\'ve already seen!',
-            cta: 'Browse & Discover'
+            title: t('empty.watched.title'),
+            subtitle: t('empty.watched.sub'),
+            cta: t('empty.watched.cta')
         },
         'watching': {
             icon: 'play_circle',
-            title: 'Not watching anything right now',
-            subtitle: 'Find your next binge-worthy obsession.',
-            cta: 'Explore Trending'
+            title: t('empty.watching.title'),
+            subtitle: t('empty.watching.sub'),
+            cta: t('empty.watching.cta')
         },
         'to-watch': {
             icon: 'bookmark_add',
-            title: 'Your watchlist is empty',
-            subtitle: 'Save titles you want to see later!',
-            cta: 'Build Your List'
+            title: t('empty.toWatch.title'),
+            subtitle: t('empty.toWatch.sub'),
+            cta: t('empty.toWatch.cta')
         },
         'favorites': {
             icon: 'favorite',
-            title: 'No favorites yet',
-            subtitle: 'Heart the titles you absolutely love ❤️',
-            cta: 'Find Your Favorites'
+            title: t('empty.favorites.title'),
+            subtitle: t('empty.favorites.sub'),
+            cta: t('empty.favorites.cta')
         }
     };
     return messages[filterType] || {
         icon: 'explore',
-        title: 'Nothing here yet',
-        subtitle: 'Start exploring and curating your personal collection.',
-        cta: 'Start Exploring'
+        title: t('empty.default.title'),
+        subtitle: t('empty.default.sub'),
+        cta: t('empty.default.cta')
     };
 }
 
@@ -673,7 +687,7 @@ function renderMoviesView(movies, hideHero = false) {
                     </div>` : ''}
                 </div>
                 <h3 class="text-on-surface font-body font-semibold text-lg leading-tight group-hover:text-primary transition-colors line-clamp-1">${title}</h3>
-                <p class="text-on-surface-variant text-sm mt-1">Movie • ${date}</p>
+                <p class="text-on-surface-variant text-sm mt-1">${t('media.movie')} • ${date}</p>
             </div>
         `;
     }
@@ -735,7 +749,7 @@ function renderTVView(tvShows, hideHero = false) {
                     </div>` : ''}
                 </div>
                 <h3 class="text-on-surface font-body font-semibold text-lg leading-tight group-hover:text-primary transition-colors line-clamp-1">${title}</h3>
-                <p class="text-on-surface-variant text-sm mt-1">TV Show • ${date}</p>
+                <p class="text-on-surface-variant text-sm mt-1">${t('media.tv')} • ${date}</p>
             </div>
         `;
     }
@@ -744,9 +758,9 @@ function renderTVView(tvShows, hideHero = false) {
 
 function getStatusBadge(status) {
     const badges = {
-        'watched': '<span class="bg-green-600/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold backdrop-blur-md">Watched</span>',
-        'watching': '<span class="bg-blue-600/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold backdrop-blur-md">Watching</span>',
-        'to-watch': '<span class="bg-amber-600/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold backdrop-blur-md">To Watch</span>'
+        'watched': `<span class="bg-green-600/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold backdrop-blur-md">${t('wl.watched')}</span>`,
+        'watching': `<span class="bg-blue-600/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold backdrop-blur-md">${t('wl.watching')}</span>`,
+        'to-watch': `<span class="bg-amber-600/80 text-white text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold backdrop-blur-md">${t('wl.toWatch')}</span>`
     };
     return badges[status] || '';
 }
@@ -810,7 +824,7 @@ function setupSearch() {
         }
 
         if (queryTrimmed.length < 2) {
-            document.getElementById('search-results-list').innerHTML = '<p class="text-outline text-center py-10">Start typing to search TMDB...</p>';
+            document.getElementById('search-results-list').innerHTML = `<p class="text-outline text-center py-10">${t('search.startTyping')}</p>`;
             document.getElementById('search-feature').style.display = 'none';
             return;
         }
@@ -845,7 +859,7 @@ function renderSearchResults(results) {
     const featurePanel = document.getElementById('search-feature');
 
     if (!results || results.length === 0) {
-        resultsList.innerHTML = '<p class="text-outline text-center py-10">No results found.</p>';
+        resultsList.innerHTML = `<p class="text-outline text-center py-10">${t('search.noResults')}</p>`;
         featurePanel.style.display = 'none';
         return;
     }
@@ -885,7 +899,7 @@ function renderSearchResults(results) {
 // ── TRAILER MODAL ─────────────────────────────
 window.openTrailer = async (id, mediaType) => {
     const key = await API.getTrailerKey(id, mediaType);
-    if (!key) { showToast('No trailer available on YouTube', 'info'); return; }
+    if (!key) { showToast(t('toast.noTrailer'), 'info'); return; }
 
     const modal = document.getElementById('trailer-modal');
     const iframe = document.getElementById('trailer-iframe');

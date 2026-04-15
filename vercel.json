@@ -20,9 +20,17 @@
     {
       "src": "app.js",
       "use": "@vercel/static"
+    },
+    {
+      "src": "lang.js",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/lang.js",
+      "dest": "/lang.js"
+    },
     {
       "src": "/api.js",
       "dest": "/api.js"

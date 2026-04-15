@@ -335,10 +335,11 @@ const TMDB_KEY = process.env.TMDB_API_KEY;
 app.get('/api/tmdb/trending/:mediaType/:timeWindow', async (req, res) => {
   const { mediaType, timeWindow } = req.params;
   const page = req.query.page || 1;
+  const lang = req.query.lang || 'en-US';
   
   try {
     const response = await fetch(
-      `${TMDB_BASE}/trending/${mediaType}/${timeWindow}?api_key=${TMDB_KEY}&language=en-US&page=${page}`
+      `${TMDB_BASE}/trending/${mediaType}/${timeWindow}?api_key=${TMDB_KEY}&language=${lang}&page=${page}`
     );
     const data = await response.json();
     res.json(data);
@@ -367,11 +368,12 @@ app.get('/api/tmdb/search', async (req, res) => {
 // GET /api/tmdb/videos/:mediaType/:id
 app.get('/api/tmdb/videos/:mediaType/:id', async (req, res) => {
   const { mediaType, id } = req.params;
+  const lang = req.query.lang || 'en-US';
   const endpoint = mediaType === 'tv' ? 'tv' : 'movie';
   
   try {
     const response = await fetch(
-      `${TMDB_BASE}/${endpoint}/${id}/videos?api_key=${TMDB_KEY}&language=en-US`
+      `${TMDB_BASE}/${endpoint}/${id}/videos?api_key=${TMDB_KEY}&language=${lang}`
     );
     const data = await response.json();
     res.json(data);
@@ -384,11 +386,12 @@ app.get('/api/tmdb/videos/:mediaType/:id', async (req, res) => {
 // GET /api/tmdb/credits/:mediaType/:id
 app.get('/api/tmdb/credits/:mediaType/:id', async (req, res) => {
   const { mediaType, id } = req.params;
+  const lang = req.query.lang || 'en-US';
   const endpoint = mediaType === 'tv' ? 'tv' : 'movie';
   
   try {
     const response = await fetch(
-      `${TMDB_BASE}/${endpoint}/${id}/credits?api_key=${TMDB_KEY}&language=en-US`
+      `${TMDB_BASE}/${endpoint}/${id}/credits?api_key=${TMDB_KEY}&language=${lang}`
     );
     const data = await response.json();
     res.json(data);

@@ -116,24 +116,24 @@
             <div class="text-center mb-8">
                 <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6">
                     <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">shield</span>
-                    <span class="text-[10px] uppercase tracking-[0.2em] text-primary font-semibold">Admin Access</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-primary font-semibold" data-i18n="admin.access">Admin Access</span>
                 </div>
-                <h1 class="font-headline text-4xl italic text-on-surface mb-2">Command Center</h1>
-                <p class="text-on-surface-variant text-sm">Enter admin credentials to continue</p>
+                <h1 class="font-headline text-4xl italic text-on-surface mb-2" data-i18n="admin.cmdCenter">Command Center</h1>
+                <p class="text-on-surface-variant text-sm" data-i18n="admin.enterCreds">Enter admin credentials to continue</p>
             </div>
             <form id="admin-login-form" class="space-y-5">
                 <div class="space-y-2">
-                    <label class="font-label text-[10px] uppercase tracking-widest text-outline">Admin Password</label>
+                    <label class="font-label text-[10px] uppercase tracking-widest text-outline" data-i18n="admin.pwLabel">Admin Password</label>
                     <input id="admin-password" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/30 focus:ring-primary text-on-surface py-4 px-4 rounded-lg font-body outline-none transition-all" placeholder="••••••••" type="password" autofocus/>
                 </div>
                 <button type="submit" class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-white font-body font-bold rounded-lg hover:brightness-110 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-lg">login</span>
-                    Access Dashboard
+                    <span data-i18n="admin.accessBtn">Access Dashboard</span>
                 </button>
                 <p id="login-error" class="text-red-400 text-sm text-center hidden"></p>
             </form>
             <div class="mt-6 text-center">
-                <a href="/" class="text-outline text-xs hover:text-primary transition-colors">← Back to Watchlist</a>
+                <a href="/" class="text-outline text-xs hover:text-primary transition-colors" data-i18n="admin.backToSite">← Back to Watchlist</a>
             </div>
         </div>
     </div>
@@ -148,7 +148,7 @@
                 </div>
                 <div>
                     <h1 class="font-headline text-xl italic text-on-surface leading-tight">Watchlist</h1>
-                    <span class="text-[9px] uppercase tracking-[0.3em] text-primary font-label font-semibold">Admin Panel</span>
+                    <span class="text-[9px] uppercase tracking-[0.3em] text-primary font-label font-semibold" data-i18n="admin.panel">Admin Panel</span>
                 </div>
             </div>
         </div>
@@ -157,19 +157,19 @@
         <nav class="flex-1 py-6 px-4 space-y-1">
             <a href="javascript:void(0)" onclick="switchSection('overview')" class="nav-link active flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface" id="nav-overview">
                 <span class="material-symbols-outlined text-xl">dashboard</span>
-                <span class="font-body text-sm font-medium">Overview</span>
+                <span class="font-body text-sm font-medium" data-i18n="admin.navOverview">Overview</span>
             </a>
             <a href="javascript:void(0)" onclick="switchSection('users')" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface-variant" id="nav-users">
                 <span class="material-symbols-outlined text-xl">group</span>
-                <span class="font-body text-sm font-medium">Users</span>
+                <span class="font-body text-sm font-medium" data-i18n="admin.navUsers">Users</span>
             </a>
             <a href="javascript:void(0)" onclick="switchSection('library')" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface-variant" id="nav-library">
                 <span class="material-symbols-outlined text-xl">movie</span>
-                <span class="font-body text-sm font-medium">All Library Items</span>
+                <span class="font-body text-sm font-medium" data-i18n="admin.navLibrary">All Library Items</span>
             </a>
             <a href="javascript:void(0)" onclick="switchSection('analytics')" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface-variant" id="nav-analytics">
                 <span class="material-symbols-outlined text-xl">analytics</span>
-                <span class="font-body text-sm font-medium">Analytics</span>
+                <span class="font-body text-sm font-medium" data-i18n="admin.navAnalytics">Analytics</span>
             </a>
         </nav>
 
@@ -177,11 +177,15 @@
         <div class="px-6 py-6 border-t border-outline-variant/10 space-y-3">
             <a href="/" class="flex items-center gap-3 py-2 px-4 text-outline hover:text-on-surface transition-colors rounded-lg hover:bg-white/5 text-sm">
                 <span class="material-symbols-outlined text-lg">arrow_back</span>
-                Back to Main Site
+                <span data-i18n="admin.backMain">Back to Main Site</span>
             </a>
+            <button onclick="toggleLang()" class="flex items-center gap-3 py-2 px-4 text-outline hover:text-on-surface transition-colors rounded-lg hover:bg-white/5 text-sm w-full text-left">
+                <span class="material-symbols-outlined text-lg">language</span>
+                <span class="lang-toggle-label">EN</span>
+            </button>
             <button onclick="adminLogout()" class="flex items-center gap-3 py-2 px-4 text-red-400 hover:text-red-300 transition-colors rounded-lg hover:bg-red-500/5 text-sm w-full text-left">
                 <span class="material-symbols-outlined text-lg">logout</span>
-                Sign Out
+                <span data-i18n="admin.signOut">Sign Out</span>
             </button>
         </div>
     </aside>
@@ -197,7 +201,7 @@
             <div class="flex items-center gap-4">
                 <button onclick="refreshData()" class="flex items-center gap-2 px-5 py-2.5 border border-outline-variant/30 rounded-lg text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all text-sm font-body">
                     <span class="material-symbols-outlined text-lg" id="refresh-icon">refresh</span>
-                    Refresh
+                    <span data-i18n="admin.refresh">Refresh</span>
                 </button>
                 <div class="flex items-center gap-2 px-4 py-2.5 bg-green-500/10 border border-green-500/20 rounded-lg">
                     <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -1320,5 +1324,6 @@
         requestAnimationFrame(update);
     }
     </script>
+    <script src="lang.js"></script>
 </body>
 </html>

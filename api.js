@@ -176,7 +176,8 @@ const LibraryAPI = {
 const API = {
     async fetchTrending(mediaType = 'movie', timeWindow = 'week', page = 1) {
         try {
-            const res = await fetch(`/api/tmdb/trending/${mediaType}/${timeWindow}?page=${page}`);
+            const lang = typeof getTmdbLang === 'function' ? getTmdbLang() : 'en-US';
+            const res = await fetch(`/api/tmdb/trending/${mediaType}/${timeWindow}?page=${page}&lang=${lang}`);
             const data = await res.json();
             return data.results || [];
         } catch (e) {
@@ -185,8 +186,9 @@ const API = {
         }
     },
 
-    async searchMulti(query, lang = 'zh-CN') {
+    async searchMulti(query) {
         try {
+            const lang = typeof getTmdbLang === 'function' ? getTmdbLang() : 'en-US';
             const res = await fetch(`/api/tmdb/search?query=${encodeURIComponent(query)}&lang=${lang}`);
             const data = await res.json();
             return (data.results || []).filter(r => r.media_type === 'movie' || r.media_type === 'tv');
@@ -198,7 +200,8 @@ const API = {
 
     async getTrailerKey(id, mediaType) {
         try {
-            const res = await fetch(`/api/tmdb/videos/${mediaType}/${id}`);
+            const lang = typeof getTmdbLang === 'function' ? getTmdbLang() : 'en-US';
+            const res = await fetch(`/api/tmdb/videos/${mediaType}/${id}?lang=${lang}`);
             const data = await res.json();
             if (data.results && data.results.length > 0) {
                 const trailer = data.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
@@ -214,7 +217,8 @@ const API = {
 
     async getCredits(id, mediaType) {
         try {
-            const res = await fetch(`/api/tmdb/credits/${mediaType}/${id}`);
+            const lang = typeof getTmdbLang === 'function' ? getTmdbLang() : 'en-US';
+            const res = await fetch(`/api/tmdb/credits/${mediaType}/${id}?lang=${lang}`);
             if (!res.ok) throw new Error('Credits fetch failed');
             return await res.json();
         } catch (e) {
