@@ -1,4 +1,4 @@
-# 🎬 Watchlist 2.0
+# <img src="favicon.svg" alt="Watchlist Icon" width="36" align="center"> Watchlist 2.0
 
 A premium movie & TV show tracking web application with a cinematic dark-themed UI, powered by TMDB, Supabase, and deployed on Vercel.
 
@@ -97,7 +97,7 @@ This project is for personal/educational use.
 
 <br>
 
-# 🎬 Watchlist 2.0（中文）
+# <img src="favicon.svg" alt="Watchlist Icon" width="36" align="center"> Watchlist 2.0（中文）
 
 一款精致的电影与电视剧追踪 Web 应用，采用电影级暗色主题界面，基于 TMDB、Supabase 构建，部署在 Vercel 上。
 

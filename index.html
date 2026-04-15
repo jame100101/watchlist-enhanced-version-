@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>watchlist2.0</title>
+    <title>Watchlist</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -118,7 +119,10 @@
     <section id="view-landing" class="view-section active h-screen flex flex-col">
         <!-- Minimal Landing TopNav -->
         <nav class="fixed top-0 w-full z-50 bg-[#0f0808]/80 backdrop-blur-xl flex justify-between items-center px-8 h-20">
-            <div class="text-2xl font-headline italic font-bold text-on-surface">Watchlist</div>
+            <div class="flex items-center gap-3">
+                <img src="favicon.svg" alt="Watchlist Logo" class="w-8 h-8 drop-shadow-[0_0_10px_rgba(230,74,74,0.6)]">
+                <div class="text-2xl font-headline italic font-bold text-on-surface">Watchlist</div>
+            </div>
             <div class="flex items-center gap-6">
                 <a class="text-primary font-body font-bold text-sm" href="javascript:void(0)" onclick="switchToView('landing')" data-i18n="nav.signIn">Sign In</a>
                 <a class="text-outline hover:text-on-surface transition-colors font-body text-sm" href="javascript:void(0)" onclick="switchToView('signup')" data-i18n="nav.signUp">Sign Up</a>
@@ -171,7 +175,10 @@
     <!-- VIEW: SIGNUP -->
     <section id="view-signup" class="view-section h-screen flex flex-col">
         <nav class="fixed top-0 w-full z-50 bg-[#0f0808]/80 backdrop-blur-xl flex justify-between items-center px-8 h-20">
-            <div class="text-2xl font-headline italic font-bold text-on-surface">Watchlist</div>
+            <div class="flex items-center gap-3">
+                <img src="favicon.svg" alt="Watchlist Logo" class="w-8 h-8 drop-shadow-[0_0_10px_rgba(230,74,74,0.6)]">
+                <div class="text-2xl font-headline italic font-bold text-on-surface">Watchlist</div>
+            </div>
             <div class="flex items-center gap-6">
                 <a class="text-outline hover:text-on-surface transition-colors font-body text-sm" href="javascript:void(0)" onclick="switchToView('landing')" data-i18n="nav.signIn">Sign In</a>
                 <a class="text-primary font-body font-bold text-sm" href="javascript:void(0)" onclick="switchToView('signup')" data-i18n="nav.signUp">Sign Up</a>
@@ -204,7 +211,10 @@
         <!-- GLOBAL TOP NAV -->
         <nav id="topNavBar" class="fixed top-0 w-full z-50 bg-[#0f0808]/80 backdrop-blur-xl flex justify-between items-center px-8 h-20 shadow-[0_20px_40px_rgba(230,74,74,0.05)] transition-all duration-500">
             <div class="flex items-center gap-12">
-                <div class="text-2xl font-headline italic font-bold text-on-surface cursor-pointer" onclick="switchToView('home')">Watchlist</div>
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchToView('home')">
+                    <img src="favicon.svg" alt="Watchlist Logo" class="w-8 h-8 drop-shadow-[0_0_10px_rgba(230,74,74,0.6)]">
+                    <div class="text-2xl font-headline italic font-bold text-on-surface">Watchlist</div>
+                </div>
                 <div class="hidden md:flex items-center gap-10 font-label text-[10px] uppercase tracking-[0.2em]">
                     <a id="nav-explore" class="nav-item text-primary border-b border-primary/50 pb-1" href="javascript:void(0)" onclick="switchToView('home')" data-i18n="nav.explore">Explore</a>
                     <a id="nav-movies" class="nav-item text-outline hover:text-on-surface transition-colors" href="javascript:void(0)" onclick="switchToView('movies')" data-i18n="nav.movies">Movies</a>
@@ -491,7 +501,10 @@
         
         <!-- GLOBAL FOOTER -->
         <footer class="w-full py-12 bg-background border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center px-12 gap-6 z-50">
-            <div class="font-headline text-lg italic text-on-surface">Watchlist</div>
+            <div class="flex items-center gap-3">
+                <img src="favicon.svg" alt="Watchlist Logo" class="w-6 h-6 drop-shadow-[0_0_10px_rgba(230,74,74,0.6)]">
+                <div class="font-headline text-lg italic text-on-surface">Watchlist</div>
+            </div>
             <div class="font-label text-[10px] uppercase tracking-widest text-outline" data-i18n="footer.copy">© 2024 Watchlist Collective</div>
         </footer>
     </section>

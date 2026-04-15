@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e64a4a" />
+      <stop offset="100%" stop-color="#991b1b" />
+    </linearGradient>
+    <linearGradient id="secondaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4a261" />
+      <stop offset="100%" stop-color="#e64a4a" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-strong" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="20" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Sleek dark background for the icon -->
+  <rect width="512" height="512" rx="110" fill="#0f0808" />
+  <rect width="512" height="512" rx="110" fill="url(#primaryGrad)" fill-opacity="0.15" />
+  <rect width="512" height="512" rx="110" fill="none" stroke="#e64a4a" stroke-opacity="0.2" stroke-width="4" />
+  
+  <!-- Inner abstract eye / play combo -->
+  <path d="M110 256 C 110 256 180 140 256 140 C 332 140 402 256 402 256 C 402 256 332 372 256 372 C 180 372 110 256 110 256 Z" fill="none" stroke="url(#primaryGrad)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-strong)" />
+  <path d="M110 256 C 110 256 180 140 256 140 C 332 140 402 256 402 256 C 402 256 332 372 256 372 C 180 372 110 256 110 256 Z" fill="none" stroke="#e64a4a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Iris -->
+  <circle cx="256" cy="256" r="60" fill="none" stroke="url(#secondaryGrad)" stroke-width="16" filter="url(#glow)" />
+  <circle cx="256" cy="256" r="60" fill="none" stroke="#f4a261" stroke-width="6" />
+  
+  <!-- Play Button (Pupil) -->
+  <polygon points="244,226 244,286 286,256" fill="#ffffff" filter="url(#glow)" />
+</svg>
