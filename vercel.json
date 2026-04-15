@@ -24,9 +24,17 @@
     {
       "src": "lang.js",
       "use": "@vercel/static"
+    },
+    {
+      "src": "background.jpg",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/background.jpg",
+      "dest": "/background.jpg"
+    },
     {
       "src": "/lang.js",
       "dest": "/lang.js"
