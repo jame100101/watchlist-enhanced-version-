@@ -398,6 +398,134 @@ app.get('/api/tmdb/credits/:mediaType/:id', async (req, res) => {
   }
 });
 
+// ═══════════════════════════════════════════════
+// ADMIN ROUTES (Dashboard Management)
+// ═══════════════════════════════════════════════
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const crypto = require('crypto');
+
+// Generate a simple admin token from the password
+function generateAdminToken(password) {
+  return crypto.createHash('sha256').update(`admin:${password}:watchlist`).digest('hex');
+}
+
+// Admin auth middleware
+function requireAdmin(req, res, next) {
+  const token = req.headers['x-admin-token'];
+  const expectedToken = generateAdminToken(ADMIN_PASSWORD);
+  
+  if (!token || token !== expectedToken) {
+    return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
+  }
+  next();
+}
+
+// POST /api/admin/verify — verify admin password and return token
+app.post('/api/admin/verify', (req, res) => {
+  const { password } = req.body;
+  
+  if (!password || password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'Invalid admin password' });
+  }
+  
+  const token = generateAdminToken(password);
+  res.json({ token, message: 'Admin access granted' });
+});
+
+// GET /api/admin/stats — aggregate statistics
+app.get('/api/admin/stats', requireAdmin, async (req, res) => {
+  try {
+    // Get total users count
+    const { data: usersData, error: usersError } = await supabaseAdmin.auth.admin.listUsers();
+    const totalUsers = usersData?.users?.length || 0;
+    
+    // Get all library items using service role (bypasses RLS)
+    const { data: items, error: itemsError } = await supabaseAdmin
+      .from('user_library')
+      .select('*');
+    
+    if (itemsError) {
+      console.error('Admin stats error:', itemsError);
+      return res.status(500).json({ error: 'Failed to fetch stats' });
+    }
+    
+    const allItems = items || [];
+    const totalItems = allItems.length;
+    const totalMovies = allItems.filter(i => i.media_type === 'movie').length;
+    const totalTV = allItems.filter(i => i.media_type === 'tv').length;
+    const totalFavorites = allItems.filter(i => i.is_favorite).length;
+    
+    // Status breakdown
+    const statusBreakdown = {
+      watched: allItems.filter(i => i.status === 'watched').length,
+      watching: allItems.filter(i => i.status === 'watching').length,
+      'to-watch': allItems.filter(i => i.status === 'to-watch').length,
+      no_status: allItems.filter(i => !i.status).length
+    };
+    
+    res.json({
+      totalUsers,
+      totalItems,
+      totalMovies,
+      totalTV,
+      totalFavorites,
+      statusBreakdown
+    });
+  } catch (err) {
+    console.error('Admin stats error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/admin/users — list all users
+app.get('/api/admin/users', requireAdmin, async (req, res) => {
+  try {
+    const { data, error } = await supabaseAdmin.auth.admin.listUsers();
+    
+    if (error) {
+      console.error('Admin users error:', error);
+      return res.status(500).json({ error: 'Failed to fetch users' });
+    }
+    
+    const users = (data?.users || []).map(u => ({
+      id: u.id,
+      email: u.email,
+      name: u.user_metadata?.full_name || '',
+      created_at: u.created_at,
+      last_sign_in_at: u.last_sign_in_at,
+      email_confirmed_at: u.email_confirmed_at
+    }));
+    
+    // Sort by most recent first
+    users.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    
+    res.json({ users });
+  } catch (err) {
+    console.error('Admin users error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/admin/library — list all library items across all users
+app.get('/api/admin/library', requireAdmin, async (req, res) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('user_library')
+      .select('*')
+      .order('updated_at', { ascending: false });
+    
+    if (error) {
+      console.error('Admin library error:', error);
+      return res.status(500).json({ error: 'Failed to fetch library' });
+    }
+    
+    res.json({ items: data || [] });
+  } catch (err) {
+    console.error('Admin library error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 // ── Catch-all: serve index.html for SPA (local dev only) ──────
 app.get('*', (req, res) => {
   if (process.env.VERCEL) {

@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>🎬 Watchlist Admin — Dashboard</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#e64a4a",
+                        "secondary": "#f4a261",
+                        "primary-container": "#450a0a",
+                        "surface-dim": "#1a0f0f",
+                        "outline": "#a38e8e",
+                        "background": "#0f0808",
+                        "surface-container-lowest": "#0a0505",
+                        "surface-container-high": "#2d1a1a",
+                        "surface-container-low": "#1f1111",
+                        "primary": "#e64a4a",
+                        "on-primary": "#450000",
+                        "outline-variant": "#534343",
+                        "surface": "#1a0f0f",
+                        "tertiary": "#e3c2b0",
+                        "on-background": "#f0e0e0",
+                        "on-surface-variant": "#d8c2c2",
+                        "on-surface": "#f0e0e0",
+                        "surface-container-highest": "#382525",
+                        "surface-container": "#241515",
+                    },
+                    fontFamily: {
+                        "headline": ["Newsreader", "serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Manrope', sans-serif; scroll-behavior: smooth; background-color: #0f0808; color: #f0e0e0; }
+        .serif-italic { font-family: 'Newsreader', serif; font-style: italic; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; display: inline-block; line-height: 1; }
+        .glass-panel { background: rgba(31, 17, 17, 0.85); backdrop-filter: blur(24px); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px rgba(230,74,74,0.2); } 50% { box-shadow: 0 0 30px rgba(230,74,74,0.4); } }
+        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
+
+        @keyframes countUp { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+        .animate-count { animation: countUp 0.5s ease-out forwards; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        .animate-slide-in { animation: slideIn 0.4s ease-out forwards; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a0f0f; }
+        ::-webkit-scrollbar-thumb { background: #534343; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e64a4a; }
+
+        /* Table styling */
+        .admin-table { border-collapse: separate; border-spacing: 0; }
+        .admin-table th { position: sticky; top: 0; z-index: 10; }
+
+        /* Sidebar nav item hover */
+        .nav-link { transition: all 0.2s ease; }
+        .nav-link:hover { background: rgba(230,74,74,0.08); }
+        .nav-link.active { background: rgba(230,74,74,0.12); border-right: 2px solid #e64a4a; }
+
+        /* Card hover effect */
+        .stat-card { transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+
+        /* User row hover */
+        .user-row { transition: all 0.2s ease; }
+        .user-row:hover { background: rgba(230,74,74,0.05) !important; }
+
+        /* Media card */
+        .media-card { transition: all 0.3s ease; }
+        .media-card:hover { transform: scale(1.03); }
+    </style>
+</head>
+
+<body class="bg-background text-on-surface selection:bg-primary/30 min-h-screen flex">
+
+    <!-- LOGIN OVERLAY -->
+    <div id="admin-login-overlay" class="fixed inset-0 z-[100] bg-background flex items-center justify-center">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[100px]"></div>
+        </div>
+        <div class="relative z-10 glass-panel p-10 rounded-xl border border-outline-variant/20 shadow-2xl w-full max-w-md animate-fade-in">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6">
+                    <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">shield</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-primary font-semibold">Admin Access</span>
+                </div>
+                <h1 class="font-headline text-4xl italic text-on-surface mb-2">Command Center</h1>
+                <p class="text-on-surface-variant text-sm">Enter admin credentials to continue</p>
+            </div>
+            <form id="admin-login-form" class="space-y-5">
+                <div class="space-y-2">
+                    <label class="font-label text-[10px] uppercase tracking-widest text-outline">Admin Password</label>
+                    <input id="admin-password" class="w-full bg-surface-container-lowest border-none ring-1 ring-outline-variant/30 focus:ring-primary text-on-surface py-4 px-4 rounded-lg font-body outline-none transition-all" placeholder="••••••••" type="password" autofocus/>
+                </div>
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-white font-body font-bold rounded-lg hover:brightness-110 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">login</span>
+                    Access Dashboard
+                </button>
+                <p id="login-error" class="text-red-400 text-sm text-center hidden"></p>
+            </form>
+            <div class="mt-6 text-center">
+                <a href="/" class="text-outline text-xs hover:text-primary transition-colors">← Back to Watchlist</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside id="admin-sidebar" class="hidden w-72 h-screen fixed left-0 top-0 bg-gradient-to-b from-surface-container to-background border-r border-outline-variant/10 z-50 flex-col">
+        <!-- Logo -->
+        <div class="px-8 py-8 border-b border-outline-variant/10">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-primary to-primary-container rounded-lg flex items-center justify-center pulse-glow">
+                    <span class="material-symbols-outlined text-white text-xl" style="font-variation-settings: 'FILL' 1;">movie_filter</span>
+                </div>
+                <div>
+                    <h1 class="font-headline text-xl italic text-on-surface leading-tight">Watchlist</h1>
+                    <span class="text-[9px] uppercase tracking-[0.3em] text-primary font-label font-semibold">Admin Panel</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="flex-1 py-6 px-4 space-y-1">
+            <a href="javascript:void(0)" onclick="switchSection('overview')" class="nav-link active flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface" id="nav-overview">
+                <span class="material-symbols-outlined text-xl">dashboard</span>
+                <span class="font-body text-sm font-medium">Overview</span>
+            </a>
+            <a href="javascript:void(0)" onclick="switchSection('users')" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface-variant" id="nav-users">
+                <span class="material-symbols-outlined text-xl">group</span>
+                <span class="font-body text-sm font-medium">Users</span>
+            </a>
+            <a href="javascript:void(0)" onclick="switchSection('library')" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface-variant" id="nav-library">
+                <span class="material-symbols-outlined text-xl">movie</span>
+                <span class="font-body text-sm font-medium">All Library Items</span>
+            </a>
+            <a href="javascript:void(0)" onclick="switchSection('analytics')" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-on-surface-variant" id="nav-analytics">
+                <span class="material-symbols-outlined text-xl">analytics</span>
+                <span class="font-body text-sm font-medium">Analytics</span>
+            </a>
+        </nav>
+
+        <!-- Bottom -->
+        <div class="px-6 py-6 border-t border-outline-variant/10 space-y-3">
+            <a href="/" class="flex items-center gap-3 py-2 px-4 text-outline hover:text-on-surface transition-colors rounded-lg hover:bg-white/5 text-sm">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                Back to Main Site
+            </a>
+            <button onclick="adminLogout()" class="flex items-center gap-3 py-2 px-4 text-red-400 hover:text-red-300 transition-colors rounded-lg hover:bg-red-500/5 text-sm w-full text-left">
+                <span class="material-symbols-outlined text-lg">logout</span>
+                Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main id="admin-main" class="hidden flex-1 ml-72 min-h-screen">
+        <!-- Top Bar -->
+        <header class="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-outline-variant/10 px-8 py-5 flex items-center justify-between">
+            <div>
+                <h1 id="page-title" class="font-headline text-2xl italic text-on-surface">Dashboard Overview</h1>
+                <p id="page-subtitle" class="text-xs font-label uppercase tracking-widest text-outline mt-1">Real-time platform insights</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="refreshData()" class="flex items-center gap-2 px-5 py-2.5 border border-outline-variant/30 rounded-lg text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all text-sm font-body">
+                    <span class="material-symbols-outlined text-lg" id="refresh-icon">refresh</span>
+                    Refresh
+                </button>
+                <div class="flex items-center gap-2 px-4 py-2.5 bg-green-500/10 border border-green-500/20 rounded-lg">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-green-400 text-xs font-label font-medium">Live</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- SECTION: OVERVIEW -->
+        <section id="section-overview" class="p-8 space-y-8">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Total Users -->
+                <div class="stat-card glass-panel rounded-xl p-6 border border-outline-variant/10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl translate-x-8 -translate-y-8"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="material-symbols-outlined text-primary text-2xl">group</span>
+                            <span class="text-[10px] uppercase tracking-widest text-outline font-label">Users</span>
+                        </div>
+                        <p id="stat-users" class="text-4xl font-headline italic font-bold text-on-surface animate-count">—</p>
+                        <p class="text-xs text-on-surface-variant mt-2">Total registered accounts</p>
+                    </div>
+                </div>
+
+                <!-- Total Library Items -->
+                <div class="stat-card glass-panel rounded-xl p-6 border border-outline-variant/10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-full blur-2xl translate-x-8 -translate-y-8"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="material-symbols-outlined text-secondary text-2xl">movie</span>
+                            <span class="text-[10px] uppercase tracking-widest text-outline font-label">Items</span>
+                        </div>
+                        <p id="stat-items" class="text-4xl font-headline italic font-bold text-on-surface animate-count">—</p>
+                        <p class="text-xs text-on-surface-variant mt-2">Total library entries</p>
+                    </div>
+                </div>
+
+                <!-- Movies -->
+                <div class="stat-card glass-panel rounded-xl p-6 border border-outline-variant/10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl translate-x-8 -translate-y-8"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="material-symbols-outlined text-blue-400 text-2xl">theaters</span>
+                            <span class="text-[10px] uppercase tracking-widest text-outline font-label">Movies</span>
+                        </div>
+                        <p id="stat-movies" class="text-4xl font-headline italic font-bold text-on-surface animate-count">—</p>
+                        <p class="text-xs text-on-surface-variant mt-2">Saved movies</p>
+                    </div>
+                </div>
+
+                <!-- TV Shows -->
+                <div class="stat-card glass-panel rounded-xl p-6 border border-outline-variant/10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl translate-x-8 -translate-y-8"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="material-symbols-outlined text-purple-400 text-2xl">live_tv</span>
+                            <span class="text-[10px] uppercase tracking-widest text-outline font-label">TV Shows</span>
+                        </div>
+                        <p id="stat-tv" class="text-4xl font-headline italic font-bold text-on-surface animate-count">—</p>
+                        <p class="text-xs text-on-surface-variant mt-2">Saved TV shows</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Row: Status Breakdown + Favorites -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Status Distribution -->
+                <div class="lg:col-span-2 glass-panel rounded-xl p-8 border border-outline-variant/10">
+                    <h3 class="font-headline text-xl italic text-on-surface mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">bar_chart</span>
+                        Status Distribution
+                    </h3>
+                    <div id="status-bars" class="space-y-5">
+                        <div class="text-center text-outline py-8">Loading analytics...</div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="glass-panel rounded-xl p-8 border border-outline-variant/10">
+                    <h3 class="font-headline text-xl italic text-on-surface mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-secondary">favorite</span>
+                        Highlights
+                    </h3>
+                    <div id="quick-stats" class="space-y-4">
+                        <div class="text-center text-outline py-8">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Users Preview -->
+            <div class="glass-panel rounded-xl p-8 border border-outline-variant/10">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-headline text-xl italic text-on-surface flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">person_add</span>
+                        Recent Users
+                    </h3>
+                    <button onclick="switchSection('users')" class="text-xs font-label uppercase tracking-widest text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
+                        View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                </div>
+                <div id="recent-users-list" class="space-y-3">
+                    <div class="text-center text-outline py-8">Loading users...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: USERS -->
+        <section id="section-users" class="p-8 space-y-6 hidden">
+            <!-- Search & Filter -->
+            <div class="flex flex-wrap items-center gap-4">
+                <div class="relative flex-1 min-w-[300px]">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+                    <input id="user-search" class="w-full bg-surface-container-lowest border border-outline-variant/20 py-3 pl-12 pr-4 rounded-lg font-body text-sm text-on-surface outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Search users by email or name..." type="text" oninput="filterUsers(this.value)"/>
+                </div>
+                <span id="user-count-badge" class="px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg text-primary font-label text-xs font-semibold">0 users</span>
+            </div>
+
+            <!-- Users Table -->
+            <div class="glass-panel rounded-xl border border-outline-variant/10 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="admin-table w-full">
+                        <thead>
+                            <tr class="bg-surface-container-high/80 backdrop-blur-md">
+                                <th class="text-left py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">User</th>
+                                <th class="text-left py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">Email</th>
+                                <th class="text-center py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">Items</th>
+                                <th class="text-center py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">Movies</th>
+                                <th class="text-center py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">TV Shows</th>
+                                <th class="text-center py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">Favorites</th>
+                                <th class="text-left py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">Created</th>
+                                <th class="text-center py-4 px-6 font-label text-[10px] uppercase tracking-widest text-outline border-b border-outline-variant/10">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <tr><td colspan="8" class="text-center py-12 text-outline">Loading users...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ALL LIBRARY ITEMS -->
+        <section id="section-library" class="p-8 space-y-6 hidden">
+            <!-- Filters -->
+            <div class="flex flex-wrap items-center gap-4">
+                <div class="relative flex-1 min-w-[250px]">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+                    <input id="library-search" class="w-full bg-surface-container-lowest border border-outline-variant/20 py-3 pl-12 pr-4 rounded-lg font-body text-sm text-on-surface outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Search by title..." type="text" oninput="filterLibrary()"/>
+                </div>
+                <select id="library-type-filter" class="bg-surface-container-lowest border border-outline-variant/20 py-3 px-4 rounded-lg font-body text-sm text-on-surface outline-none focus:ring-1 focus:ring-primary" onchange="filterLibrary()">
+                    <option value="all">All Types</option>
+                    <option value="movie">Movies</option>
+                    <option value="tv">TV Shows</option>
+                </select>
+                <select id="library-status-filter" class="bg-surface-container-lowest border border-outline-variant/20 py-3 px-4 rounded-lg font-body text-sm text-on-surface outline-none focus:ring-1 focus:ring-primary" onchange="filterLibrary()">
+                    <option value="all">All Status</option>
+                    <option value="watched">Watched</option>
+                    <option value="watching">Watching</option>
+                    <option value="to-watch">To Watch</option>
+                    <option value="favorites">Favorites</option>
+                </select>
+                <select id="library-user-filter" class="bg-surface-container-lowest border border-outline-variant/20 py-3 px-4 rounded-lg font-body text-sm text-on-surface outline-none focus:ring-1 focus:ring-primary" onchange="filterLibrary()">
+                    <option value="all">All Users</option>
+                </select>
+                <span id="library-count-badge" class="px-4 py-2 bg-secondary/10 border border-secondary/20 rounded-lg text-secondary font-label text-xs font-semibold">0 items</span>
+            </div>
+
+            <!-- Library Grid -->
+            <div id="library-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
+                <div class="col-span-full text-center text-outline py-12">Loading library...</div>
+            </div>
+        </section>
+
+        <!-- SECTION: ANALYTICS -->
+        <section id="section-analytics" class="p-8 space-y-8 hidden">
+            <!-- Top Movies -->
+            <div class="glass-panel rounded-xl p-8 border border-outline-variant/10">
+                <h3 class="font-headline text-xl italic text-on-surface mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-400">trending_up</span>
+                    Most Popular Movies
+                </h3>
+                <div id="top-movies-list" class="space-y-3">
+                    <div class="text-center text-outline py-8">Loading...</div>
+                </div>
+            </div>
+
+            <!-- Top TV Shows -->
+            <div class="glass-panel rounded-xl p-8 border border-outline-variant/10">
+                <h3 class="font-headline text-xl italic text-on-surface mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-purple-400">trending_up</span>
+                    Most Popular TV Shows
+                </h3>
+                <div id="top-tv-list" class="space-y-3">
+                    <div class="text-center text-outline py-8">Loading...</div>
+                </div>
+            </div>
+
+            <!-- User Activity Leaderboard -->
+            <div class="glass-panel rounded-xl p-8 border border-outline-variant/10">
+                <h3 class="font-headline text-xl italic text-on-surface mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary">leaderboard</span>
+                    Most Active Users
+                </h3>
+                <div id="user-leaderboard" class="space-y-3">
+                    <div class="text-center text-outline py-8">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- USER DETAIL MODAL -->
+        <div id="user-detail-modal" class="fixed inset-0 z-[80] bg-black/80 backdrop-blur-md hidden items-center justify-center p-8">
+            <div class="bg-surface-container rounded-xl border border-outline-variant/20 shadow-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden flex flex-col animate-fade-in-up">
+                <!-- Modal Header -->
+                <div class="px-8 py-6 border-b border-outline-variant/10 flex items-center justify-between bg-surface-container-high/50 backdrop-blur-md">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-container flex items-center justify-center">
+                            <span id="modal-user-initial" class="text-white font-headline text-xl italic font-bold">?</span>
+                        </div>
+                        <div>
+                            <h2 id="modal-user-name" class="font-headline text-2xl italic text-on-surface">User</h2>
+                            <p id="modal-user-email" class="text-xs text-on-surface-variant font-label">email@example.com</p>
+                        </div>
+                    </div>
+                    <button onclick="closeUserModal()" class="text-outline hover:text-primary transition-colors p-2 rounded-lg hover:bg-white/5">
+                        <span class="material-symbols-outlined text-2xl">close</span>
+                    </button>
+                </div>
+
+                <!-- Modal Stats -->
+                <div id="modal-user-stats" class="px-8 py-4 border-b border-outline-variant/10 flex flex-wrap gap-6">
+                </div>
+
+                <!-- Modal Content -->
+                <div class="flex-1 overflow-y-auto p-8 no-scrollbar">
+                    <h3 class="font-headline text-lg italic text-on-surface mb-4">Library Collection</h3>
+                    <div id="modal-user-library" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+                        <div class="col-span-full text-center text-outline py-8">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    // ═══════════════════════════════════════════════
+    // ADMIN DASHBOARD — Client-Side Logic
+    // ═══════════════════════════════════════════════
+
+    const ADMIN_TOKEN_KEY = 'admin_token';
+    const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+
+    let allUsers = [];
+    let allLibrary = [];
+    let currentSection = 'overview';
+
+    // ── Admin Auth ──────────────────────────────────
+    function getAdminToken() {
+        return sessionStorage.getItem(ADMIN_TOKEN_KEY);
+    }
+
+    function adminHeaders() {
+        return {
+            'Content-Type': 'application/json',
+            'X-Admin-Token': getAdminToken() || ''
+        };
+    }
+
+    document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const password = document.getElementById('admin-password').value;
+        const errorEl = document.getElementById('login-error');
+
+        try {
+            const res = await fetch('/api/admin/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password })
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                errorEl.textContent = data.error || 'Invalid password';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            sessionStorage.setItem(ADMIN_TOKEN_KEY, data.token);
+            showDashboard();
+        } catch (err) {
+            errorEl.textContent = 'Connection error';
+            errorEl.classList.remove('hidden');
+        }
+    });
+
+    function adminLogout() {
+        sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+        location.reload();
+    }
+
+    async function showDashboard() {
+        document.getElementById('admin-login-overlay').style.display = 'none';
+        document.getElementById('admin-sidebar').classList.remove('hidden');
+        document.getElementById('admin-sidebar').classList.add('flex');
+        document.getElementById('admin-main').classList.remove('hidden');
+        await refreshData();
+    }
+
+    // ── Check existing session ──────────────────────
+    (async () => {
+        const token = getAdminToken();
+        if (token) {
+            try {
+                const res = await fetch('/api/admin/stats', { headers: adminHeaders() });
+                if (res.ok) {
+                    showDashboard();
+                    return;
+                }
+            } catch (e) {}
+        }
+        // Show login
+        document.getElementById('admin-login-overlay').style.display = 'flex';
+    })();
+
+    // ── Data Fetching ──────────────────────────────
+    async function refreshData() {
+        const icon = document.getElementById('refresh-icon');
+        icon.classList.add('animate-spin');
+
+        try {
+            const [statsRes, usersRes, libraryRes] = await Promise.all([
+                fetch('/api/admin/stats', { headers: adminHeaders() }),
+                fetch('/api/admin/users', { headers: adminHeaders() }),
+                fetch('/api/admin/library', { headers: adminHeaders() })
+            ]);
+
+            if (!statsRes.ok || !usersRes.ok || !libraryRes.ok) {
+                if (statsRes.status === 401) {
+                    adminLogout();
+                    return;
+                }
+                throw new Error('Failed to fetch data');
+            }
+
+            const stats = await statsRes.json();
+            const usersData = await usersRes.json();
+            const libraryData = await libraryRes.json();
+
+            allUsers = usersData.users || [];
+            allLibrary = libraryData.items || [];
+
+            renderOverview(stats);
+            renderUsersTable(allUsers);
+            renderLibraryGrid(allLibrary);
+            renderAnalytics();
+            populateUserFilter();
+        } catch (err) {
+            console.error('Dashboard refresh error:', err);
+        } finally {
+            icon.classList.remove('animate-spin');
+        }
+    }
+
+    // ── Section Switching ──────────────────────────
+    function switchSection(section) {
+        currentSection = section;
+
+        // Hide all sections
+        document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
+        document.getElementById(`section-${section}`).classList.remove('hidden');
+
+        // Update nav
+        document.querySelectorAll('.nav-link').forEach(l => {
+            l.classList.remove('active', 'text-on-surface');
+            l.classList.add('text-on-surface-variant');
+        });
+        const activeNav = document.getElementById(`nav-${section}`);
+        if (activeNav) {
+            activeNav.classList.add('active', 'text-on-surface');
+            activeNav.classList.remove('text-on-surface-variant');
+        }
+
+        // Update page title
+        const titles = {
+            overview: ['Dashboard Overview', 'Real-time platform insights'],
+            users: ['User Management', 'All registered accounts'],
+            library: ['Library Browser', 'All saved movies & TV shows'],
+            analytics: ['Analytics', 'Content trends & user activity']
+        };
+        document.getElementById('page-title').textContent = titles[section]?.[0] || '';
+        document.getElementById('page-subtitle').textContent = titles[section]?.[1] || '';
+    }
+
+    // ── OVERVIEW RENDER ──────────────────────────
+    function renderOverview(stats) {
+        // Stats cards
+        animateNumber('stat-users', stats.totalUsers || 0);
+        animateNumber('stat-items', stats.totalItems || 0);
+        animateNumber('stat-movies', stats.totalMovies || 0);
+        animateNumber('stat-tv', stats.totalTV || 0);
+
+        // Status bars
+        const statusData = stats.statusBreakdown || {};
+        const total = stats.totalItems || 1;
+        const statusBars = document.getElementById('status-bars');
+
+        const statuses = [
+            { key: 'watched', label: 'Watched', icon: 'check_circle', color: 'bg-green-500', textColor: 'text-green-400' },
+            { key: 'watching', label: 'Watching', icon: 'play_circle', color: 'bg-blue-500', textColor: 'text-blue-400' },
+            { key: 'to-watch', label: 'To Watch', icon: 'bookmark', color: 'bg-amber-500', textColor: 'text-amber-400' },
+            { key: 'no_status', label: 'No Status', icon: 'remove_circle_outline', color: 'bg-gray-500', textColor: 'text-gray-400' }
+        ];
+
+        let barsHtml = '';
+        statuses.forEach(s => {
+            const count = statusData[s.key] || 0;
+            const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+            barsHtml += `
+                <div class="animate-slide-in">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm ${s.textColor}">${s.icon}</span>
+                            <span class="font-body text-sm text-on-surface">${s.label}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="font-label text-xs text-on-surface-variant">${count} items</span>
+                            <span class="font-label text-xs font-semibold ${s.textColor}">${pct}%</span>
+                        </div>
+                    </div>
+                    <div class="w-full h-2 bg-surface-container-lowest rounded-full overflow-hidden">
+                        <div class="${s.color} h-full rounded-full transition-all duration-1000" style="width: ${pct}%"></div>
+                    </div>
+                </div>
+            `;
+        });
+        statusBars.innerHTML = barsHtml;
+
+        // Quick stats
+        const quickStats = document.getElementById('quick-stats');
+        quickStats.innerHTML = `
+            <div class="flex items-center justify-between py-3 border-b border-outline-variant/10">
+                <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-400 text-lg" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    Total Favorites
+                </span>
+                <span class="font-headline text-xl italic text-on-surface">${stats.totalFavorites || 0}</span>
+            </div>
+            <div class="flex items-center justify-between py-3 border-b border-outline-variant/10">
+                <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-400 text-lg">theaters</span>
+                    Avg Items/User
+                </span>
+                <span class="font-headline text-xl italic text-on-surface">${stats.totalUsers ? (stats.totalItems / stats.totalUsers).toFixed(1) : '0'}</span>
+            </div>
+            <div class="flex items-center justify-between py-3 border-b border-outline-variant/10">
+                <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                    <span class="material-symbols-outlined text-green-400 text-lg">check_circle</span>
+                    Completion Rate
+                </span>
+                <span class="font-headline text-xl italic text-on-surface">${stats.totalItems ? Math.round(((statusData.watched || 0) / stats.totalItems) * 100) : 0}%</span>
+            </div>
+            <div class="flex items-center justify-between py-3">
+                <span class="text-sm text-on-surface-variant flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary text-lg">movie</span>
+                    Movie vs TV Ratio
+                </span>
+                <span class="font-headline text-xl italic text-on-surface">${stats.totalTV ? (stats.totalMovies / stats.totalTV).toFixed(1) : '∞'} : 1</span>
+            </div>
+        `;
+
+        // Recent users preview
+        renderRecentUsers(allUsers.slice(0, 5));
+    }
+
+    function renderRecentUsers(users) {
+        const container = document.getElementById('recent-users-list');
+        if (!users.length) {
+            container.innerHTML = '<div class="text-center text-outline py-6">No users yet</div>';
+            return;
+        }
+        let html = '';
+        users.forEach((u, i) => {
+            const name = u.name || u.email?.split('@')[0] || 'Unknown';
+            const initial = name.charAt(0).toUpperCase();
+            const itemCount = allLibrary.filter(l => l.user_id === u.id).length;
+            const created = u.created_at ? new Date(u.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+
+            html += `
+                <div class="user-row flex items-center justify-between py-3 px-4 rounded-lg border border-transparent hover:border-outline-variant/10 cursor-pointer animate-slide-in" style="animation-delay: ${i * 0.05}s" onclick="openUserDetail('${u.id}')">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary/80 to-primary-container flex items-center justify-center">
+                            <span class="text-white font-headline italic font-bold text-sm">${initial}</span>
+                        </div>
+                        <div>
+                            <p class="font-body text-sm font-semibold text-on-surface">${name}</p>
+                            <p class="text-xs text-on-surface-variant">${u.email}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6 text-xs text-on-surface-variant">
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-primary">movie</span> ${itemCount}</span>
+                        <span>${created}</span>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    // ── USERS TABLE ──────────────────────────────
+    function renderUsersTable(users) {
+        const tbody = document.getElementById('users-table-body');
+        document.getElementById('user-count-badge').textContent = `${users.length} users`;
+
+        if (!users.length) {
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-12 text-outline">No users found</td></tr>';
+            return;
+        }
+
+        let html = '';
+        users.forEach((u, i) => {
+            const name = u.name || u.email?.split('@')[0] || 'Unknown';
+            const initial = name.charAt(0).toUpperCase();
+            const userItems = allLibrary.filter(l => l.user_id === u.id);
+            const movies = userItems.filter(l => l.media_type === 'movie').length;
+            const tv = userItems.filter(l => l.media_type === 'tv').length;
+            const favs = userItems.filter(l => l.is_favorite).length;
+            const created = u.created_at ? new Date(u.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+
+            html += `
+                <tr class="user-row border-b border-outline-variant/5 animate-slide-in" style="animation-delay: ${i * 0.03}s">
+                    <td class="py-4 px-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary/80 to-primary-container flex items-center justify-center flex-shrink-0">
+                                <span class="text-white font-headline italic font-bold text-sm">${initial}</span>
+                            </div>
+                            <span class="font-body text-sm font-semibold text-on-surface">${name}</span>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-sm text-on-surface-variant">${u.email}</td>
+                    <td class="py-4 px-6 text-center">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold">${userItems.length}</span>
+                    </td>
+                    <td class="py-4 px-6 text-center text-sm text-on-surface-variant">${movies}</td>
+                    <td class="py-4 px-6 text-center text-sm text-on-surface-variant">${tv}</td>
+                    <td class="py-4 px-6 text-center">
+                        ${favs > 0 ? `<span class="inline-flex items-center gap-1 text-red-400 text-xs"><span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>${favs}</span>` : '<span class="text-outline text-xs">—</span>'}
+                    </td>
+                    <td class="py-4 px-6 text-sm text-on-surface-variant">${created}</td>
+                    <td class="py-4 px-6 text-center">
+                        <button onclick="openUserDetail('${u.id}')" class="px-4 py-1.5 text-xs font-label text-primary border border-primary/30 rounded-lg hover:bg-primary/10 transition-all">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function filterUsers(query) {
+        const q = query.toLowerCase().trim();
+        const filtered = q
+            ? allUsers.filter(u => (u.email || '').toLowerCase().includes(q) || (u.name || '').toLowerCase().includes(q))
+            : allUsers;
+        renderUsersTable(filtered);
+    }
+
+    // ── LIBRARY GRID ──────────────────────────────
+    function renderLibraryGrid(items) {
+        const grid = document.getElementById('library-grid');
+        document.getElementById('library-count-badge').textContent = `${items.length} items`;
+
+        if (!items.length) {
+            grid.innerHTML = '<div class="col-span-full text-center text-outline py-12">No items found</div>';
+            return;
+        }
+
+        let html = '';
+        items.forEach((item, i) => {
+            const data = item.item_data || {};
+            const title = data.title || data.name || 'Untitled';
+            const poster = data.poster_path ? IMG_URL + data.poster_path : '';
+            const rating = (data.vote_average || 0).toFixed(1);
+            const type = item.media_type || 'movie';
+            const user = allUsers.find(u => u.id === item.user_id);
+            const userName = user ? (user.name || user.email?.split('@')[0]) : 'Unknown';
+
+            const statusColors = {
+                'watched': 'bg-green-600/80',
+                'watching': 'bg-blue-600/80',
+                'to-watch': 'bg-amber-600/80'
+            };
+
+            html += `
+                <div class="media-card group cursor-pointer animate-fade-in" style="animation-delay: ${Math.min(i * 0.02, 0.5)}s">
+                    <div class="relative aspect-[2/3] rounded-lg overflow-hidden mb-3 bg-surface-container-low">
+                        ${poster ? `<img src="${poster}" class="w-full h-full object-cover" loading="lazy">` : '<div class="w-full h-full flex items-center justify-center text-outline"><span class="material-symbols-outlined text-4xl">image</span></div>'}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+                            <span class="text-xs text-white font-label flex items-center gap-1">
+                                <span class="material-symbols-outlined text-xs text-secondary" style="font-variation-settings: 'FILL' 1;">star</span> ${rating}
+                            </span>
+                            <span class="text-[10px] text-white/70 mt-1 truncate">by ${userName}</span>
+                        </div>
+                        <!-- Badges -->
+                        <div class="absolute top-2 right-2 flex flex-col gap-1">
+                            ${item.status ? `<span class="${statusColors[item.status] || 'bg-gray-600/80'} text-white text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded-full font-bold">${item.status}</span>` : ''}
+                            ${item.is_favorite ? '<span class="material-symbols-outlined text-red-400 text-sm" style="font-variation-settings: \'FILL\' 1;">favorite</span>' : ''}
+                        </div>
+                        <!-- Type badge -->
+                        <div class="absolute top-2 left-2">
+                            <span class="text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded font-bold ${type === 'tv' ? 'bg-purple-600/80 text-white' : 'bg-blue-600/80 text-white'}">${type}</span>
+                        </div>
+                    </div>
+                    <h4 class="font-body text-xs font-semibold text-on-surface truncate">${title}</h4>
+                </div>
+            `;
+        });
+        grid.innerHTML = html;
+    }
+
+    function filterLibrary() {
+        const search = (document.getElementById('library-search').value || '').toLowerCase().trim();
+        const typeFilter = document.getElementById('library-type-filter').value;
+        const statusFilter = document.getElementById('library-status-filter').value;
+        const userFilter = document.getElementById('library-user-filter').value;
+
+        let filtered = allLibrary;
+
+        if (search) {
+            filtered = filtered.filter(item => {
+                const data = item.item_data || {};
+                const title = (data.title || data.name || '').toLowerCase();
+                return title.includes(search);
+            });
+        }
+        if (typeFilter !== 'all') {
+            filtered = filtered.filter(item => item.media_type === typeFilter);
+        }
+        if (statusFilter === 'favorites') {
+            filtered = filtered.filter(item => item.is_favorite);
+        } else if (statusFilter !== 'all') {
+            filtered = filtered.filter(item => item.status === statusFilter);
+        }
+        if (userFilter !== 'all') {
+            filtered = filtered.filter(item => item.user_id === userFilter);
+        }
+
+        renderLibraryGrid(filtered);
+    }
+
+    function populateUserFilter() {
+        const select = document.getElementById('library-user-filter');
+        let html = '<option value="all">All Users</option>';
+        allUsers.forEach(u => {
+            const name = u.name || u.email?.split('@')[0] || 'Unknown';
+            html += `<option value="${u.id}">${name}</option>`;
+        });
+        select.innerHTML = html;
+    }
+
+    // ── ANALYTICS ──────────────────────────────────
+    function renderAnalytics() {
+        // Count occurrences of each title
+        const movieCounts = {};
+        const tvCounts = {};
+        const userActivity = {};
+
+        allLibrary.forEach(item => {
+            const data = item.item_data || {};
+            const title = data.title || data.name || 'Untitled';
+            const key = `${item.tmdb_id}_${item.media_type}`;
+
+            if (item.media_type === 'movie') {
+                if (!movieCounts[key]) movieCounts[key] = { title, poster: data.poster_path, count: 0, rating: data.vote_average };
+                movieCounts[key].count++;
+            } else {
+                if (!tvCounts[key]) tvCounts[key] = { title, poster: data.poster_path, count: 0, rating: data.vote_average };
+                tvCounts[key].count++;
+            }
+
+            if (!userActivity[item.user_id]) userActivity[item.user_id] = 0;
+            userActivity[item.user_id]++;
+        });
+
+        // Top Movies
+        const topMovies = Object.values(movieCounts).sort((a, b) => b.count - a.count).slice(0, 10);
+        renderTopList('top-movies-list', topMovies, 'theaters');
+
+        // Top TV
+        const topTV = Object.values(tvCounts).sort((a, b) => b.count - a.count).slice(0, 10);
+        renderTopList('top-tv-list', topTV, 'live_tv');
+
+        // User leaderboard
+        const leaderboard = Object.entries(userActivity)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .map(([userId, count]) => {
+                const user = allUsers.find(u => u.id === userId);
+                return { user, count };
+            });
+
+        renderLeaderboard(leaderboard);
+    }
+
+    function renderTopList(containerId, items, icon) {
+        const container = document.getElementById(containerId);
+        if (!items.length) {
+            container.innerHTML = '<div class="text-center text-outline py-6">No data yet</div>';
+            return;
+        }
+
+        const maxCount = items[0]?.count || 1;
+        let html = '';
+        items.forEach((item, i) => {
+            const pct = Math.round((item.count / maxCount) * 100);
+            const poster = item.poster ? IMG_URL + item.poster : '';
+
+            html += `
+                <div class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-white/3 transition-all animate-slide-in" style="animation-delay: ${i * 0.05}s">
+                    <span class="text-lg font-headline italic text-outline w-8 text-center">${i + 1}</span>
+                    ${poster ? `<img src="${poster}" class="w-10 h-14 rounded object-cover shadow flex-shrink-0">` : `<div class="w-10 h-14 rounded bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined text-outline text-sm">${icon}</span></div>`}
+                    <div class="flex-1 min-w-0">
+                        <p class="font-body text-sm font-semibold text-on-surface truncate">${item.title}</p>
+                        <div class="mt-1.5 w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-700" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <span class="text-sm font-headline italic text-on-surface">${item.count}</span>
+                        <span class="text-[10px] text-on-surface-variant ml-1">saves</span>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderLeaderboard(entries) {
+        const container = document.getElementById('user-leaderboard');
+        if (!entries.length) {
+            container.innerHTML = '<div class="text-center text-outline py-6">No data yet</div>';
+            return;
+        }
+
+        const maxCount = entries[0]?.count || 1;
+        let html = '';
+        entries.forEach((entry, i) => {
+            const u = entry.user;
+            if (!u) return;
+            const name = u.name || u.email?.split('@')[0] || 'Unknown';
+            const initial = name.charAt(0).toUpperCase();
+            const pct = Math.round((entry.count / maxCount) * 100);
+
+            const medals = ['🥇', '🥈', '🥉'];
+            const medal = medals[i] || `#${i + 1}`;
+
+            html += `
+                <div class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-white/3 transition-all cursor-pointer animate-slide-in" style="animation-delay: ${i * 0.05}s" onclick="openUserDetail('${u.id}')">
+                    <span class="text-lg w-8 text-center">${medal}</span>
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary/80 to-primary-container flex items-center justify-center flex-shrink-0">
+                        <span class="text-white font-headline italic font-bold text-sm">${initial}</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-body text-sm font-semibold text-on-surface">${name}</p>
+                        <div class="mt-1.5 w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-secondary to-primary rounded-full transition-all duration-700" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                    <span class="text-sm font-headline italic text-on-surface flex-shrink-0">${entry.count} items</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    // ── USER DETAIL MODAL ──────────────────────────
+    function openUserDetail(userId) {
+        const user = allUsers.find(u => u.id === userId);
+        if (!user) return;
+
+        const modal = document.getElementById('user-detail-modal');
+        modal.style.display = 'flex';
+
+        const name = user.name || user.email?.split('@')[0] || 'Unknown';
+        document.getElementById('modal-user-initial').textContent = name.charAt(0).toUpperCase();
+        document.getElementById('modal-user-name').textContent = name;
+        document.getElementById('modal-user-email').textContent = user.email;
+
+        const userItems = allLibrary.filter(l => l.user_id === userId);
+        const movies = userItems.filter(l => l.media_type === 'movie').length;
+        const tv = userItems.filter(l => l.media_type === 'tv').length;
+        const watched = userItems.filter(l => l.status === 'watched').length;
+        const watching = userItems.filter(l => l.status === 'watching').length;
+        const toWatch = userItems.filter(l => l.status === 'to-watch').length;
+        const favs = userItems.filter(l => l.is_favorite).length;
+
+        document.getElementById('modal-user-stats').innerHTML = `
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-lg">
+                <span class="material-symbols-outlined text-primary text-sm">movie</span>
+                <span class="text-xs font-label text-on-surface"><strong>${userItems.length}</strong> Total</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 rounded-lg">
+                <span class="material-symbols-outlined text-blue-400 text-sm">theaters</span>
+                <span class="text-xs font-label text-on-surface"><strong>${movies}</strong> Movies</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 rounded-lg">
+                <span class="material-symbols-outlined text-purple-400 text-sm">live_tv</span>
+                <span class="text-xs font-label text-on-surface"><strong>${tv}</strong> TV</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 rounded-lg">
+                <span class="material-symbols-outlined text-green-400 text-sm">check_circle</span>
+                <span class="text-xs font-label text-on-surface"><strong>${watched}</strong> Watched</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 rounded-lg">
+                <span class="material-symbols-outlined text-amber-400 text-sm">bookmark</span>
+                <span class="text-xs font-label text-on-surface"><strong>${toWatch}</strong> To Watch</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 rounded-lg">
+                <span class="material-symbols-outlined text-red-400 text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                <span class="text-xs font-label text-on-surface"><strong>${favs}</strong> Favs</span>
+            </div>
+        `;
+
+        // Render user's library
+        const grid = document.getElementById('modal-user-library');
+        if (!userItems.length) {
+            grid.innerHTML = '<div class="col-span-full text-center text-outline py-8">This user has no saved items yet.</div>';
+            return;
+        }
+
+        let html = '';
+        userItems.forEach(item => {
+            const data = item.item_data || {};
+            const title = data.title || data.name || 'Untitled';
+            const poster = data.poster_path ? IMG_URL + data.poster_path : '';
+            const statusColors = { 'watched': 'bg-green-600/80', 'watching': 'bg-blue-600/80', 'to-watch': 'bg-amber-600/80' };
+
+            html += `
+                <div class="group">
+                    <div class="relative aspect-[2/3] rounded-lg overflow-hidden bg-surface-container-low mb-2">
+                        ${poster ? `<img src="${poster}" class="w-full h-full object-cover" loading="lazy">` : '<div class="w-full h-full flex items-center justify-center text-outline"><span class="material-symbols-outlined text-3xl">image</span></div>'}
+                        <div class="absolute top-1.5 right-1.5 flex flex-col gap-1">
+                            ${item.status ? `<span class="${statusColors[item.status] || ''} text-white text-[7px] uppercase tracking-wider px-1 py-0.5 rounded-full font-bold">${item.status}</span>` : ''}
+                            ${item.is_favorite ? '<span class="material-symbols-outlined text-red-400 text-xs" style="font-variation-settings: \'FILL\' 1;">favorite</span>' : ''}
+                        </div>
+                        <div class="absolute top-1.5 left-1.5">
+                            <span class="text-[7px] uppercase tracking-wider px-1 py-0.5 rounded font-bold ${item.media_type === 'tv' ? 'bg-purple-600/80 text-white' : 'bg-blue-600/80 text-white'}">${item.media_type}</span>
+                        </div>
+                    </div>
+                    <p class="text-[11px] font-body font-semibold text-on-surface truncate">${title}</p>
+                </div>
+            `;
+        });
+        grid.innerHTML = html;
+    }
+
+    function closeUserModal() {
+        document.getElementById('user-detail-modal').style.display = 'none';
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('user-detail-modal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeUserModal();
+    });
+
+    // ── Utilities ──────────────────────────────────
+    function animateNumber(elementId, target) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+
+        const duration = 800;
+        const start = 0;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            const current = Math.round(start + (target - start) * eased);
+            el.textContent = current.toLocaleString();
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+        requestAnimationFrame(update);
+    }
+    </script>
+</body>
+</html>
