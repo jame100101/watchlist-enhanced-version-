@@ -526,6 +526,59 @@ app.get('/api/admin/library', requireAdmin, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// DELETE /api/admin/users/:id — delete a user account
+app.delete('/api/admin/users/:id', requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    // First delete all library items for this user (using service role)
+    await supabaseAdmin
+      .from('user_library')
+      .delete()
+      .eq('user_id', id);
+    
+    // Then delete the user from auth
+    const { error } = await supabaseAdmin.auth.admin.deleteUser(id);
+    
+    if (error) {
+      console.error('Delete user error:', error);
+      return res.status(500).json({ error: 'Failed to delete user: ' + error.message });
+    }
+    
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
+    console.error('Delete user error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// PUT /api/admin/users/:id/password — reset user password
+app.put('/api/admin/users/:id/password', requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  
+  if (!password || password.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters' });
+  }
+  
+  try {
+    const { data, error } = await supabaseAdmin.auth.admin.updateUserById(id, {
+      password: password
+    });
+    
+    if (error) {
+      console.error('Reset password error:', error);
+      return res.status(500).json({ error: 'Failed to reset password: ' + error.message });
+    }
+    
+    res.json({ message: 'Password reset successfully' });
+  } catch (err) {
+    console.error('Reset password error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // ── Catch-all: serve index.html for SPA (local dev only) ──────
 app.get('*', (req, res) => {
   if (process.env.VERCEL) {

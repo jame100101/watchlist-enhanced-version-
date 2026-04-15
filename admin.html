@@ -433,6 +433,78 @@
 
                 <!-- Modal Content -->
                 <div class="flex-1 overflow-y-auto p-8 no-scrollbar">
+                    <!-- Account Management Section -->
+                    <div id="modal-account-section" class="glass-panel rounded-xl p-6 border border-outline-variant/10 mb-8">
+                        <h3 class="font-headline text-lg italic text-on-surface mb-5 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">manage_accounts</span>
+                            Account Management
+                        </h3>
+                        
+                        <!-- Account Info -->
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center justify-between py-3 px-4 bg-surface-container-lowest/50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-outline text-lg">email</span>
+                                    <span class="text-sm text-on-surface-variant">Email</span>
+                                </div>
+                                <span id="modal-info-email" class="text-sm text-on-surface font-mono">—</span>
+                            </div>
+                            <div class="flex items-center justify-between py-3 px-4 bg-surface-container-lowest/50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-outline text-lg">badge</span>
+                                    <span class="text-sm text-on-surface-variant">User ID</span>
+                                </div>
+                                <span id="modal-info-id" class="text-xs text-on-surface font-mono truncate max-w-[200px]">—</span>
+                            </div>
+                            <div class="flex items-center justify-between py-3 px-4 bg-surface-container-lowest/50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-outline text-lg">calendar_today</span>
+                                    <span class="text-sm text-on-surface-variant">Created At</span>
+                                </div>
+                                <span id="modal-info-created" class="text-sm text-on-surface">—</span>
+                            </div>
+                            <div class="flex items-center justify-between py-3 px-4 bg-surface-container-lowest/50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-outline text-lg">login</span>
+                                    <span class="text-sm text-on-surface-variant">Last Sign In</span>
+                                </div>
+                                <span id="modal-info-last-login" class="text-sm text-on-surface">—</span>
+                            </div>
+                            <div class="flex items-center justify-between py-3 px-4 bg-surface-container-lowest/50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-outline text-lg">lock</span>
+                                    <span class="text-sm text-on-surface-variant">Password</span>
+                                </div>
+                                <span class="text-xs text-on-surface-variant italic">Encrypted (cannot be viewed)</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex flex-wrap gap-3">
+                            <button id="modal-reset-pw-btn" onclick="showResetPasswordForm()" class="flex items-center gap-2 px-5 py-2.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-lg hover:bg-amber-500/20 transition-all text-sm font-body font-medium">
+                                <span class="material-symbols-outlined text-lg">lock_reset</span>
+                                Reset Password
+                            </button>
+                            <button id="modal-delete-btn" class="flex items-center gap-2 px-5 py-2.5 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg hover:bg-red-500/20 transition-all text-sm font-body font-medium">
+                                <span class="material-symbols-outlined text-lg">person_remove</span>
+                                Delete Account
+                            </button>
+                        </div>
+
+                        <!-- Reset Password Form (hidden by default) -->
+                        <div id="reset-pw-form" class="mt-5 p-5 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/10 hidden animate-fade-in">
+                            <h4 class="font-label text-xs uppercase tracking-widest text-amber-400 mb-3 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">lock_reset</span>
+                                Set New Password
+                            </h4>
+                            <div class="flex gap-3">
+                                <input id="new-password-input" type="text" class="flex-1 bg-surface-container-lowest border border-outline-variant/20 py-2.5 px-4 rounded-lg font-body text-sm text-on-surface outline-none focus:ring-1 focus:ring-amber-500 transition-all" placeholder="Enter new password (min 6 chars)" />
+                                <button onclick="confirmResetPassword()" class="px-5 py-2.5 bg-amber-500 text-black font-body font-bold text-sm rounded-lg hover:brightness-110 transition-all">Apply</button>
+                                <button onclick="hideResetPasswordForm()" class="px-4 py-2.5 text-outline hover:text-on-surface transition-colors text-sm">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <h3 class="font-headline text-lg italic text-on-surface mb-4">Library Collection</h3>
                     <div id="modal-user-library" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
                         <div class="col-span-full text-center text-outline py-8">Loading...</div>
@@ -440,6 +512,26 @@
                 </div>
             </div>
         </div>
+
+        <!-- CONFIRM DIALOG -->
+        <div id="confirm-dialog" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden items-center justify-center p-8">
+            <div class="bg-surface-container rounded-xl border border-outline-variant/20 shadow-2xl w-full max-w-md p-8 animate-fade-in-up">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
+                        <span class="material-symbols-outlined text-red-400 text-3xl">warning</span>
+                    </div>
+                    <h2 id="confirm-title" class="font-headline text-2xl italic text-on-surface mb-2">Are you sure?</h2>
+                    <p id="confirm-message" class="text-sm text-on-surface-variant">This action cannot be undone.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="closeConfirmDialog()" class="flex-1 py-3 border border-outline-variant/30 text-on-surface-variant rounded-lg hover:bg-white/5 transition-all font-body font-medium">Cancel</button>
+                    <button id="confirm-action-btn" class="flex-1 py-3 bg-red-600 text-white rounded-lg hover:brightness-110 transition-all font-body font-bold">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOAST CONTAINER -->
+        <div id="admin-toast" class="fixed top-6 right-6 z-[200] flex flex-col items-end gap-3 pointer-events-none"></div>
     </main>
 
     <script>
@@ -747,9 +839,15 @@
                     </td>
                     <td class="py-4 px-6 text-sm text-on-surface-variant">${created}</td>
                     <td class="py-4 px-6 text-center">
-                        <button onclick="openUserDetail('${u.id}')" class="px-4 py-1.5 text-xs font-label text-primary border border-primary/30 rounded-lg hover:bg-primary/10 transition-all">
-                            View
-                        </button>
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="openUserDetail('${u.id}')" class="px-3 py-1.5 text-xs font-label text-primary border border-primary/30 rounded-lg hover:bg-primary/10 transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-xs">visibility</span>View
+                            </button>
+                            <button onclick="event.stopPropagation(); deleteUserFromTable('${u.id}', '${name.replace(/'/g, "\\'")}')"
+                                class="px-3 py-1.5 text-xs font-label text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/10 transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-xs">delete</span>Delete
+                            </button>
+                        </div>
                     </td>
                 </tr>
             `;
@@ -974,9 +1072,12 @@
     }
 
     // ── USER DETAIL MODAL ──────────────────────────
+    let currentModalUserId = null;
+
     function openUserDetail(userId) {
         const user = allUsers.find(u => u.id === userId);
         if (!user) return;
+        currentModalUserId = userId;
 
         const modal = document.getElementById('user-detail-modal');
         modal.style.display = 'flex';
@@ -985,6 +1086,24 @@
         document.getElementById('modal-user-initial').textContent = name.charAt(0).toUpperCase();
         document.getElementById('modal-user-name').textContent = name;
         document.getElementById('modal-user-email').textContent = user.email;
+
+        // Account info
+        document.getElementById('modal-info-email').textContent = user.email;
+        document.getElementById('modal-info-id').textContent = user.id;
+        document.getElementById('modal-info-created').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A';
+        document.getElementById('modal-info-last-login').textContent = user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'Never';
+
+        // Set up delete button
+        document.getElementById('modal-delete-btn').onclick = () => {
+            showConfirmDialog(
+                'Delete Account',
+                `Are you sure you want to delete "${name}" (${user.email})? All their library data will be permanently removed.`,
+                () => deleteUser(userId)
+            );
+        };
+
+        // Hide reset form
+        hideResetPasswordForm();
 
         const userItems = allLibrary.filter(l => l.user_id === userId);
         const movies = userItems.filter(l => l.media_type === 'movie').length;
@@ -1056,12 +1175,127 @@
 
     function closeUserModal() {
         document.getElementById('user-detail-modal').style.display = 'none';
+        currentModalUserId = null;
     }
 
     // Close modal on backdrop click
     document.getElementById('user-detail-modal').addEventListener('click', (e) => {
         if (e.target === e.currentTarget) closeUserModal();
     });
+
+    // ── DELETE USER ──────────────────────────────────
+    function deleteUserFromTable(userId, userName) {
+        const user = allUsers.find(u => u.id === userId);
+        const email = user ? user.email : '';
+        showConfirmDialog(
+            'Delete Account',
+            `Are you sure you want to delete "${userName}" (${email})? All their library data will be permanently removed.`,
+            () => deleteUser(userId)
+        );
+    }
+
+    async function deleteUser(userId) {
+        closeConfirmDialog();
+        try {
+            const res = await fetch(`/api/admin/users/${userId}`, {
+                method: 'DELETE',
+                headers: adminHeaders()
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Delete failed');
+
+            showToast('User deleted successfully', 'success');
+            closeUserModal();
+            await refreshData();
+        } catch (err) {
+            showToast(err.message || 'Failed to delete user', 'error');
+        }
+    }
+
+    // ── RESET PASSWORD ──────────────────────────────
+    function showResetPasswordForm() {
+        document.getElementById('reset-pw-form').classList.remove('hidden');
+        document.getElementById('new-password-input').value = '';
+        document.getElementById('new-password-input').focus();
+    }
+
+    function hideResetPasswordForm() {
+        document.getElementById('reset-pw-form').classList.add('hidden');
+    }
+
+    async function confirmResetPassword() {
+        const password = document.getElementById('new-password-input').value;
+        if (!password || password.length < 6) {
+            showToast('Password must be at least 6 characters', 'warning');
+            return;
+        }
+
+        if (!currentModalUserId) return;
+
+        try {
+            const res = await fetch(`/api/admin/users/${currentModalUserId}/password`, {
+                method: 'PUT',
+                headers: adminHeaders(),
+                body: JSON.stringify({ password })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Reset failed');
+
+            showToast('Password reset successfully', 'success');
+            hideResetPasswordForm();
+        } catch (err) {
+            showToast(err.message || 'Failed to reset password', 'error');
+        }
+    }
+
+    // ── CONFIRM DIALOG ──────────────────────────────
+    let confirmCallback = null;
+
+    function showConfirmDialog(title, message, onConfirm) {
+        document.getElementById('confirm-title').textContent = title;
+        document.getElementById('confirm-message').textContent = message;
+        confirmCallback = onConfirm;
+        document.getElementById('confirm-action-btn').onclick = () => {
+            if (confirmCallback) confirmCallback();
+        };
+        document.getElementById('confirm-dialog').style.display = 'flex';
+    }
+
+    function closeConfirmDialog() {
+        document.getElementById('confirm-dialog').style.display = 'none';
+        confirmCallback = null;
+    }
+
+    document.getElementById('confirm-dialog').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeConfirmDialog();
+    });
+
+    // ── TOAST ──────────────────────────────────────
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('admin-toast');
+        const icons = { success: 'check_circle', error: 'error', warning: 'warning', info: 'info' };
+        const colors = {
+            success: 'from-green-600/90 to-green-800/90 border-green-500/30',
+            error: 'from-red-600/90 to-red-800/90 border-red-500/30',
+            warning: 'from-amber-600/90 to-amber-800/90 border-amber-500/30',
+            info: 'from-blue-600/90 to-blue-800/90 border-blue-500/30'
+        };
+
+        const toast = document.createElement('div');
+        toast.className = `flex items-center gap-3 px-6 py-4 bg-gradient-to-r ${colors[type]} border rounded-xl shadow-2xl backdrop-blur-md text-white animate-fade-in min-w-[300px] pointer-events-auto`;
+        toast.innerHTML = `
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">${icons[type]}</span>
+            <span class="font-body text-sm font-medium">${message}</span>
+        `;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            toast.style.transition = 'all 0.4s ease';
+            setTimeout(() => toast.remove(), 400);
+        }, 3000);
+    }
 
     // ── Utilities ──────────────────────────────────
     function animateNumber(elementId, target) {
