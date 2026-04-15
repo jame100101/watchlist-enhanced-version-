@@ -200,8 +200,8 @@ const API = {
 
     async getTrailerKey(id, mediaType) {
         try {
-            const lang = typeof getTmdbLang === 'function' ? getTmdbLang() : 'en-US';
-            const res = await fetch(`/api/tmdb/videos/${mediaType}/${id}?lang=${lang}`);
+            // Always fetch trailers in English — YouTube trailers rarely exist in other languages
+            const res = await fetch(`/api/tmdb/videos/${mediaType}/${id}?lang=en-US`);
             const data = await res.json();
             if (data.results && data.results.length > 0) {
                 const trailer = data.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
